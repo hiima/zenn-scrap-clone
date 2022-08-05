@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "up": "docker compose up"
+    "hasura": "hasura --project hasura"
   },
   "devDependencies": {
     "hasura-cli": "^2.9.0"
