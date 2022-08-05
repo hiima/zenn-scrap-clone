@@ -1,0 +1,1 @@
+CREATE TABLE "public"."comments" ("id" uuid NOT NULL, "content" text NOT NULL, "posted_at" timestamptz NOT NULL, "scrap_id" uuid NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("scrap_id") REFERENCES "public"."scraps"("id") ON UPDATE cascade ON DELETE cascade, CONSTRAINT "content_must_not_be_empty" CHECK (length(content) > 0));COMMENT ON TABLE "public"."comments" IS E'コメント';

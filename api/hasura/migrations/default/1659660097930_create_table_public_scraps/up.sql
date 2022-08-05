@@ -1,0 +1,1 @@
+CREATE TABLE "public"."scraps" ("id" uuid NOT NULL, "title" text NOT NULL, "posted_at" timestamptz NOT NULL, PRIMARY KEY ("id") , CONSTRAINT "title_must_not_be_empty" CHECK (length(title) > 0));COMMENT ON TABLE "public"."scraps" IS E'スクラップ';
