@@ -1,0 +1,12 @@
+query Scraps {
+  scraps {
+    id
+    postedAt
+    title
+    comments {
+      id
+      content
+      postedAt
+    }
+  }
+}
