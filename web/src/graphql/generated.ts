@@ -1,10 +1,16 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import { gql } from "@apollo/client";
+import * as Apollo from "@apollo/client";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -19,35 +25,34 @@ export type Scalars = {
 
 /** コメント */
 export type Comments = {
-  __typename?: 'Comments';
-  content: Scalars['String'];
-  id: Scalars['uuid'];
-  postedAt: Scalars['timestamptz'];
+  __typename?: "Comments";
+  content: Scalars["String"];
+  id: Scalars["uuid"];
+  postedAt: Scalars["timestamptz"];
   /** An object relationship */
   scrap: Scraps;
-  scrapId: Scalars['uuid'];
+  scrapId: Scalars["uuid"];
 };
 
 /** aggregated selection of "comments" */
 export type CommentsAggregate = {
-  __typename?: 'CommentsAggregate';
+  __typename?: "CommentsAggregate";
   aggregate?: Maybe<CommentsAggregateFields>;
   nodes: Array<Comments>;
 };
 
 /** aggregate fields of "comments" */
 export type CommentsAggregateFields = {
-  __typename?: 'CommentsAggregateFields';
-  count: Scalars['Int'];
+  __typename?: "CommentsAggregateFields";
+  count: Scalars["Int"];
   max?: Maybe<CommentsMaxFields>;
   min?: Maybe<CommentsMinFields>;
 };
 
-
 /** aggregate fields of "comments" */
 export type CommentsAggregateFieldsCountArgs = {
   columns?: InputMaybe<Array<CommentsSelectColumn>>;
-  distinct?: InputMaybe<Scalars['Boolean']>;
+  distinct?: InputMaybe<Scalars["Boolean"]>;
 };
 
 /** order by aggregate values of table "comments" */
@@ -79,25 +84,25 @@ export type CommentsBoolExp = {
 /** unique or primary key constraints on table "comments" */
 export enum CommentsConstraint {
   /** unique or primary key constraint on columns "id" */
-  CommentsPkey = 'comments_pkey'
+  CommentsPkey = "comments_pkey",
 }
 
 /** input type for inserting data into table "comments" */
 export type CommentsInsertInput = {
-  content?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['uuid']>;
-  postedAt?: InputMaybe<Scalars['timestamptz']>;
+  content?: InputMaybe<Scalars["String"]>;
+  id?: InputMaybe<Scalars["uuid"]>;
+  postedAt?: InputMaybe<Scalars["timestamptz"]>;
   scrap?: InputMaybe<ScrapsObjRelInsertInput>;
-  scrapId?: InputMaybe<Scalars['uuid']>;
+  scrapId?: InputMaybe<Scalars["uuid"]>;
 };
 
 /** aggregate max on columns */
 export type CommentsMaxFields = {
-  __typename?: 'CommentsMaxFields';
-  content?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
-  postedAt?: Maybe<Scalars['timestamptz']>;
-  scrapId?: Maybe<Scalars['uuid']>;
+  __typename?: "CommentsMaxFields";
+  content?: Maybe<Scalars["String"]>;
+  id?: Maybe<Scalars["uuid"]>;
+  postedAt?: Maybe<Scalars["timestamptz"]>;
+  scrapId?: Maybe<Scalars["uuid"]>;
 };
 
 /** order by max() on columns of table "comments" */
@@ -110,11 +115,11 @@ export type CommentsMaxOrderBy = {
 
 /** aggregate min on columns */
 export type CommentsMinFields = {
-  __typename?: 'CommentsMinFields';
-  content?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
-  postedAt?: Maybe<Scalars['timestamptz']>;
-  scrapId?: Maybe<Scalars['uuid']>;
+  __typename?: "CommentsMinFields";
+  content?: Maybe<Scalars["String"]>;
+  id?: Maybe<Scalars["uuid"]>;
+  postedAt?: Maybe<Scalars["timestamptz"]>;
+  scrapId?: Maybe<Scalars["uuid"]>;
 };
 
 /** order by min() on columns of table "comments" */
@@ -127,9 +132,9 @@ export type CommentsMinOrderBy = {
 
 /** response of any mutation on the table "comments" */
 export type CommentsMutationResponse = {
-  __typename?: 'CommentsMutationResponse';
+  __typename?: "CommentsMutationResponse";
   /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
+  affected_rows: Scalars["Int"];
   /** data from the rows affected by the mutation */
   returning: Array<Comments>;
 };
@@ -152,93 +157,90 @@ export type CommentsOrderBy = {
 
 /** primary key columns input for table: comments */
 export type CommentsPkColumnsInput = {
-  id: Scalars['uuid'];
+  id: Scalars["uuid"];
 };
 
 /** select columns of table "comments" */
 export enum CommentsSelectColumn {
   /** column name */
-  Content = 'content',
+  Content = "content",
   /** column name */
-  Id = 'id',
+  Id = "id",
   /** column name */
-  PostedAt = 'postedAt',
+  PostedAt = "postedAt",
   /** column name */
-  ScrapId = 'scrapId'
+  ScrapId = "scrapId",
 }
 
 /** input type for updating data in table "comments" */
 export type CommentsSetInput = {
-  content?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['uuid']>;
-  postedAt?: InputMaybe<Scalars['timestamptz']>;
-  scrapId?: InputMaybe<Scalars['uuid']>;
+  content?: InputMaybe<Scalars["String"]>;
+  id?: InputMaybe<Scalars["uuid"]>;
+  postedAt?: InputMaybe<Scalars["timestamptz"]>;
+  scrapId?: InputMaybe<Scalars["uuid"]>;
 };
 
 /** update columns of table "comments" */
 export enum CommentsUpdateColumn {
   /** column name */
-  Content = 'content',
+  Content = "content",
   /** column name */
-  Id = 'id',
+  Id = "id",
   /** column name */
-  PostedAt = 'postedAt',
+  PostedAt = "postedAt",
   /** column name */
-  ScrapId = 'scrapId'
+  ScrapId = "scrapId",
 }
 
 /** スクラップ */
 export type Scraps = {
-  __typename?: 'Scraps';
+  __typename?: "Scraps";
   /** An array relationship */
   comments: Array<Comments>;
   /** An aggregate relationship */
   commentsAggregate: CommentsAggregate;
-  id: Scalars['uuid'];
-  postedAt: Scalars['timestamptz'];
-  title: Scalars['String'];
+  id: Scalars["uuid"];
+  postedAt: Scalars["timestamptz"];
+  title: Scalars["String"];
 };
-
 
 /** スクラップ */
 export type ScrapsCommentsArgs = {
   distinctOn?: InputMaybe<Array<CommentsSelectColumn>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars["Int"]>;
+  offset?: InputMaybe<Scalars["Int"]>;
   orderBy?: InputMaybe<Array<CommentsOrderBy>>;
   where?: InputMaybe<CommentsBoolExp>;
 };
 
-
 /** スクラップ */
 export type ScrapsCommentsAggregateArgs = {
   distinctOn?: InputMaybe<Array<CommentsSelectColumn>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars["Int"]>;
+  offset?: InputMaybe<Scalars["Int"]>;
   orderBy?: InputMaybe<Array<CommentsOrderBy>>;
   where?: InputMaybe<CommentsBoolExp>;
 };
 
 /** aggregated selection of "scraps" */
 export type ScrapsAggregate = {
-  __typename?: 'ScrapsAggregate';
+  __typename?: "ScrapsAggregate";
   aggregate?: Maybe<ScrapsAggregateFields>;
   nodes: Array<Scraps>;
 };
 
 /** aggregate fields of "scraps" */
 export type ScrapsAggregateFields = {
-  __typename?: 'ScrapsAggregateFields';
-  count: Scalars['Int'];
+  __typename?: "ScrapsAggregateFields";
+  count: Scalars["Int"];
   max?: Maybe<ScrapsMaxFields>;
   min?: Maybe<ScrapsMinFields>;
 };
 
-
 /** aggregate fields of "scraps" */
 export type ScrapsAggregateFieldsCountArgs = {
   columns?: InputMaybe<Array<ScrapsSelectColumn>>;
-  distinct?: InputMaybe<Scalars['Boolean']>;
+  distinct?: InputMaybe<Scalars["Boolean"]>;
 };
 
 /** Boolean expression to filter rows from the table "scraps". All fields are combined with a logical 'AND'. */
@@ -255,38 +257,38 @@ export type ScrapsBoolExp = {
 /** unique or primary key constraints on table "scraps" */
 export enum ScrapsConstraint {
   /** unique or primary key constraint on columns "id" */
-  ScrapsPkey = 'scraps_pkey'
+  ScrapsPkey = "scraps_pkey",
 }
 
 /** input type for inserting data into table "scraps" */
 export type ScrapsInsertInput = {
   comments?: InputMaybe<CommentsArrRelInsertInput>;
-  id?: InputMaybe<Scalars['uuid']>;
-  postedAt?: InputMaybe<Scalars['timestamptz']>;
-  title?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars["uuid"]>;
+  postedAt?: InputMaybe<Scalars["timestamptz"]>;
+  title?: InputMaybe<Scalars["String"]>;
 };
 
 /** aggregate max on columns */
 export type ScrapsMaxFields = {
-  __typename?: 'ScrapsMaxFields';
-  id?: Maybe<Scalars['uuid']>;
-  postedAt?: Maybe<Scalars['timestamptz']>;
-  title?: Maybe<Scalars['String']>;
+  __typename?: "ScrapsMaxFields";
+  id?: Maybe<Scalars["uuid"]>;
+  postedAt?: Maybe<Scalars["timestamptz"]>;
+  title?: Maybe<Scalars["String"]>;
 };
 
 /** aggregate min on columns */
 export type ScrapsMinFields = {
-  __typename?: 'ScrapsMinFields';
-  id?: Maybe<Scalars['uuid']>;
-  postedAt?: Maybe<Scalars['timestamptz']>;
-  title?: Maybe<Scalars['String']>;
+  __typename?: "ScrapsMinFields";
+  id?: Maybe<Scalars["uuid"]>;
+  postedAt?: Maybe<Scalars["timestamptz"]>;
+  title?: Maybe<Scalars["String"]>;
 };
 
 /** response of any mutation on the table "scraps" */
 export type ScrapsMutationResponse = {
-  __typename?: 'ScrapsMutationResponse';
+  __typename?: "ScrapsMutationResponse";
   /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
+  affected_rows: Scalars["Int"];
   /** data from the rows affected by the mutation */
   returning: Array<Scraps>;
 };
@@ -315,98 +317,98 @@ export type ScrapsOrderBy = {
 
 /** primary key columns input for table: scraps */
 export type ScrapsPkColumnsInput = {
-  id: Scalars['uuid'];
+  id: Scalars["uuid"];
 };
 
 /** select columns of table "scraps" */
 export enum ScrapsSelectColumn {
   /** column name */
-  Id = 'id',
+  Id = "id",
   /** column name */
-  PostedAt = 'postedAt',
+  PostedAt = "postedAt",
   /** column name */
-  Title = 'title'
+  Title = "title",
 }
 
 /** input type for updating data in table "scraps" */
 export type ScrapsSetInput = {
-  id?: InputMaybe<Scalars['uuid']>;
-  postedAt?: InputMaybe<Scalars['timestamptz']>;
-  title?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars["uuid"]>;
+  postedAt?: InputMaybe<Scalars["timestamptz"]>;
+  title?: InputMaybe<Scalars["String"]>;
 };
 
 /** update columns of table "scraps" */
 export enum ScrapsUpdateColumn {
   /** column name */
-  Id = 'id',
+  Id = "id",
   /** column name */
-  PostedAt = 'postedAt',
+  PostedAt = "postedAt",
   /** column name */
-  Title = 'title'
+  Title = "title",
 }
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export type StringComparisonExp = {
-  _eq?: InputMaybe<Scalars['String']>;
-  _gt?: InputMaybe<Scalars['String']>;
-  _gte?: InputMaybe<Scalars['String']>;
+  _eq?: InputMaybe<Scalars["String"]>;
+  _gt?: InputMaybe<Scalars["String"]>;
+  _gte?: InputMaybe<Scalars["String"]>;
   /** does the column match the given case-insensitive pattern */
-  _ilike?: InputMaybe<Scalars['String']>;
-  _in?: InputMaybe<Array<Scalars['String']>>;
+  _ilike?: InputMaybe<Scalars["String"]>;
+  _in?: InputMaybe<Array<Scalars["String"]>>;
   /** does the column match the given POSIX regular expression, case insensitive */
-  _iregex?: InputMaybe<Scalars['String']>;
-  _isNull?: InputMaybe<Scalars['Boolean']>;
+  _iregex?: InputMaybe<Scalars["String"]>;
+  _isNull?: InputMaybe<Scalars["Boolean"]>;
   /** does the column match the given pattern */
-  _like?: InputMaybe<Scalars['String']>;
-  _lt?: InputMaybe<Scalars['String']>;
-  _lte?: InputMaybe<Scalars['String']>;
-  _neq?: InputMaybe<Scalars['String']>;
+  _like?: InputMaybe<Scalars["String"]>;
+  _lt?: InputMaybe<Scalars["String"]>;
+  _lte?: InputMaybe<Scalars["String"]>;
+  _neq?: InputMaybe<Scalars["String"]>;
   /** does the column NOT match the given case-insensitive pattern */
-  _nilike?: InputMaybe<Scalars['String']>;
-  _nin?: InputMaybe<Array<Scalars['String']>>;
+  _nilike?: InputMaybe<Scalars["String"]>;
+  _nin?: InputMaybe<Array<Scalars["String"]>>;
   /** does the column NOT match the given POSIX regular expression, case insensitive */
-  _niregex?: InputMaybe<Scalars['String']>;
+  _niregex?: InputMaybe<Scalars["String"]>;
   /** does the column NOT match the given pattern */
-  _nlike?: InputMaybe<Scalars['String']>;
+  _nlike?: InputMaybe<Scalars["String"]>;
   /** does the column NOT match the given POSIX regular expression, case sensitive */
-  _nregex?: InputMaybe<Scalars['String']>;
+  _nregex?: InputMaybe<Scalars["String"]>;
   /** does the column NOT match the given SQL regular expression */
-  _nsimilar?: InputMaybe<Scalars['String']>;
+  _nsimilar?: InputMaybe<Scalars["String"]>;
   /** does the column match the given POSIX regular expression, case sensitive */
-  _regex?: InputMaybe<Scalars['String']>;
+  _regex?: InputMaybe<Scalars["String"]>;
   /** does the column match the given SQL regular expression */
-  _similar?: InputMaybe<Scalars['String']>;
+  _similar?: InputMaybe<Scalars["String"]>;
 };
 
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 export type TimestamptzComparisonExp = {
-  _eq?: InputMaybe<Scalars['timestamptz']>;
-  _gt?: InputMaybe<Scalars['timestamptz']>;
-  _gte?: InputMaybe<Scalars['timestamptz']>;
-  _in?: InputMaybe<Array<Scalars['timestamptz']>>;
-  _isNull?: InputMaybe<Scalars['Boolean']>;
-  _lt?: InputMaybe<Scalars['timestamptz']>;
-  _lte?: InputMaybe<Scalars['timestamptz']>;
-  _neq?: InputMaybe<Scalars['timestamptz']>;
-  _nin?: InputMaybe<Array<Scalars['timestamptz']>>;
+  _eq?: InputMaybe<Scalars["timestamptz"]>;
+  _gt?: InputMaybe<Scalars["timestamptz"]>;
+  _gte?: InputMaybe<Scalars["timestamptz"]>;
+  _in?: InputMaybe<Array<Scalars["timestamptz"]>>;
+  _isNull?: InputMaybe<Scalars["Boolean"]>;
+  _lt?: InputMaybe<Scalars["timestamptz"]>;
+  _lte?: InputMaybe<Scalars["timestamptz"]>;
+  _neq?: InputMaybe<Scalars["timestamptz"]>;
+  _nin?: InputMaybe<Array<Scalars["timestamptz"]>>;
 };
 
 /** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
 export type UuidComparisonExp = {
-  _eq?: InputMaybe<Scalars['uuid']>;
-  _gt?: InputMaybe<Scalars['uuid']>;
-  _gte?: InputMaybe<Scalars['uuid']>;
-  _in?: InputMaybe<Array<Scalars['uuid']>>;
-  _isNull?: InputMaybe<Scalars['Boolean']>;
-  _lt?: InputMaybe<Scalars['uuid']>;
-  _lte?: InputMaybe<Scalars['uuid']>;
-  _neq?: InputMaybe<Scalars['uuid']>;
-  _nin?: InputMaybe<Array<Scalars['uuid']>>;
+  _eq?: InputMaybe<Scalars["uuid"]>;
+  _gt?: InputMaybe<Scalars["uuid"]>;
+  _gte?: InputMaybe<Scalars["uuid"]>;
+  _in?: InputMaybe<Array<Scalars["uuid"]>>;
+  _isNull?: InputMaybe<Scalars["Boolean"]>;
+  _lt?: InputMaybe<Scalars["uuid"]>;
+  _lte?: InputMaybe<Scalars["uuid"]>;
+  _neq?: InputMaybe<Scalars["uuid"]>;
+  _nin?: InputMaybe<Array<Scalars["uuid"]>>;
 };
 
 /** mutation root */
 export type Mutation_Root = {
-  __typename?: 'mutation_root';
+  __typename?: "mutation_root";
   /** delete data from the table: "comments" */
   deleteComments?: Maybe<CommentsMutationResponse>;
   /** delete single row from the table: "comments" */
@@ -433,30 +435,25 @@ export type Mutation_Root = {
   updateScrapsByPk?: Maybe<Scraps>;
 };
 
-
 /** mutation root */
 export type Mutation_RootDeleteCommentsArgs = {
   where: CommentsBoolExp;
 };
 
-
 /** mutation root */
 export type Mutation_RootDeleteCommentsByPkArgs = {
-  id: Scalars['uuid'];
+  id: Scalars["uuid"];
 };
-
 
 /** mutation root */
 export type Mutation_RootDeleteScrapsArgs = {
   where: ScrapsBoolExp;
 };
 
-
 /** mutation root */
 export type Mutation_RootDeleteScrapsByPkArgs = {
-  id: Scalars['uuid'];
+  id: Scalars["uuid"];
 };
-
 
 /** mutation root */
 export type Mutation_RootInsertCommentsArgs = {
@@ -464,13 +461,11 @@ export type Mutation_RootInsertCommentsArgs = {
   onConflict?: InputMaybe<CommentsOnConflict>;
 };
 
-
 /** mutation root */
 export type Mutation_RootInsertCommentsOneArgs = {
   object: CommentsInsertInput;
   onConflict?: InputMaybe<CommentsOnConflict>;
 };
-
 
 /** mutation root */
 export type Mutation_RootInsertScrapsArgs = {
@@ -478,13 +473,11 @@ export type Mutation_RootInsertScrapsArgs = {
   onConflict?: InputMaybe<ScrapsOnConflict>;
 };
 
-
 /** mutation root */
 export type Mutation_RootInsertScrapsOneArgs = {
   object: ScrapsInsertInput;
   onConflict?: InputMaybe<ScrapsOnConflict>;
 };
-
 
 /** mutation root */
 export type Mutation_RootUpdateCommentsArgs = {
@@ -492,20 +485,17 @@ export type Mutation_RootUpdateCommentsArgs = {
   where: CommentsBoolExp;
 };
 
-
 /** mutation root */
 export type Mutation_RootUpdateCommentsByPkArgs = {
   _set?: InputMaybe<CommentsSetInput>;
   pk_columns: CommentsPkColumnsInput;
 };
 
-
 /** mutation root */
 export type Mutation_RootUpdateScrapsArgs = {
   _set?: InputMaybe<ScrapsSetInput>;
   where: ScrapsBoolExp;
 };
-
 
 /** mutation root */
 export type Mutation_RootUpdateScrapsByPkArgs = {
@@ -516,21 +506,21 @@ export type Mutation_RootUpdateScrapsByPkArgs = {
 /** column ordering options */
 export enum OrderBy {
   /** in ascending order, nulls last */
-  Asc = 'asc',
+  Asc = "asc",
   /** in ascending order, nulls first */
-  AscNullsFirst = 'ascNullsFirst',
+  AscNullsFirst = "ascNullsFirst",
   /** in ascending order, nulls last */
-  AscNullsLast = 'ascNullsLast',
+  AscNullsLast = "ascNullsLast",
   /** in descending order, nulls first */
-  Desc = 'desc',
+  Desc = "desc",
   /** in descending order, nulls first */
-  DescNullsFirst = 'descNullsFirst',
+  DescNullsFirst = "descNullsFirst",
   /** in descending order, nulls last */
-  DescNullsLast = 'descNullsLast'
+  DescNullsLast = "descNullsLast",
 }
 
 export type Query_Root = {
-  __typename?: 'query_root';
+  __typename?: "query_root";
   /** An array relationship */
   comments: Array<Comments>;
   /** An aggregate relationship */
@@ -544,55 +534,49 @@ export type Query_Root = {
   /** fetch data from the table: "scraps" using primary key columns */
   scrapsByPk?: Maybe<Scraps>;
 };
-
 
 export type Query_RootCommentsArgs = {
   distinctOn?: InputMaybe<Array<CommentsSelectColumn>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars["Int"]>;
+  offset?: InputMaybe<Scalars["Int"]>;
   orderBy?: InputMaybe<Array<CommentsOrderBy>>;
   where?: InputMaybe<CommentsBoolExp>;
 };
-
 
 export type Query_RootCommentsAggregateArgs = {
   distinctOn?: InputMaybe<Array<CommentsSelectColumn>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars["Int"]>;
+  offset?: InputMaybe<Scalars["Int"]>;
   orderBy?: InputMaybe<Array<CommentsOrderBy>>;
   where?: InputMaybe<CommentsBoolExp>;
 };
 
-
 export type Query_RootCommentsByPkArgs = {
-  id: Scalars['uuid'];
+  id: Scalars["uuid"];
 };
-
 
 export type Query_RootScrapsArgs = {
   distinctOn?: InputMaybe<Array<ScrapsSelectColumn>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars["Int"]>;
+  offset?: InputMaybe<Scalars["Int"]>;
   orderBy?: InputMaybe<Array<ScrapsOrderBy>>;
   where?: InputMaybe<ScrapsBoolExp>;
 };
-
 
 export type Query_RootScrapsAggregateArgs = {
   distinctOn?: InputMaybe<Array<ScrapsSelectColumn>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars["Int"]>;
+  offset?: InputMaybe<Scalars["Int"]>;
   orderBy?: InputMaybe<Array<ScrapsOrderBy>>;
   where?: InputMaybe<ScrapsBoolExp>;
 };
 
-
 export type Query_RootScrapsByPkArgs = {
-  id: Scalars['uuid'];
+  id: Scalars["uuid"];
 };
 
 export type Subscription_Root = {
-  __typename?: 'subscription_root';
+  __typename?: "subscription_root";
   /** An array relationship */
   comments: Array<Comments>;
   /** An aggregate relationship */
@@ -607,72 +591,78 @@ export type Subscription_Root = {
   scrapsByPk?: Maybe<Scraps>;
 };
 
-
 export type Subscription_RootCommentsArgs = {
   distinctOn?: InputMaybe<Array<CommentsSelectColumn>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars["Int"]>;
+  offset?: InputMaybe<Scalars["Int"]>;
   orderBy?: InputMaybe<Array<CommentsOrderBy>>;
   where?: InputMaybe<CommentsBoolExp>;
 };
-
 
 export type Subscription_RootCommentsAggregateArgs = {
   distinctOn?: InputMaybe<Array<CommentsSelectColumn>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars["Int"]>;
+  offset?: InputMaybe<Scalars["Int"]>;
   orderBy?: InputMaybe<Array<CommentsOrderBy>>;
   where?: InputMaybe<CommentsBoolExp>;
 };
 
-
 export type Subscription_RootCommentsByPkArgs = {
-  id: Scalars['uuid'];
+  id: Scalars["uuid"];
 };
-
 
 export type Subscription_RootScrapsArgs = {
   distinctOn?: InputMaybe<Array<ScrapsSelectColumn>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars["Int"]>;
+  offset?: InputMaybe<Scalars["Int"]>;
   orderBy?: InputMaybe<Array<ScrapsOrderBy>>;
   where?: InputMaybe<ScrapsBoolExp>;
 };
-
 
 export type Subscription_RootScrapsAggregateArgs = {
   distinctOn?: InputMaybe<Array<ScrapsSelectColumn>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars["Int"]>;
+  offset?: InputMaybe<Scalars["Int"]>;
   orderBy?: InputMaybe<Array<ScrapsOrderBy>>;
   where?: InputMaybe<ScrapsBoolExp>;
 };
 
-
 export type Subscription_RootScrapsByPkArgs = {
-  id: Scalars['uuid'];
+  id: Scalars["uuid"];
 };
 
-export type ScrapsQueryVariables = Exact<{ [key: string]: never; }>;
+export type ScrapsQueryVariables = Exact<{ [key: string]: never }>;
 
-
-export type ScrapsQuery = { __typename?: 'query_root', scraps: Array<{ __typename?: 'Scraps', id: string, postedAt: string, title: string, comments: Array<{ __typename?: 'Comments', id: string, content: string, postedAt: string }> }> };
-
+export type ScrapsQuery = {
+  __typename?: "query_root";
+  scraps: Array<{
+    __typename?: "Scraps";
+    id: string;
+    postedAt: string;
+    title: string;
+    comments: Array<{
+      __typename?: "Comments";
+      id: string;
+      content: string;
+      postedAt: string;
+    }>;
+  }>;
+};
 
 export const ScrapsDocument = gql`
-    query Scraps {
-  scraps {
-    id
-    postedAt
-    title
-    comments {
+  query Scraps {
+    scraps {
       id
-      content
       postedAt
+      title
+      comments {
+        id
+        content
+        postedAt
+      }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useScrapsQuery__
@@ -689,14 +679,27 @@ export const ScrapsDocument = gql`
  *   },
  * });
  */
-export function useScrapsQuery(baseOptions?: Apollo.QueryHookOptions<ScrapsQuery, ScrapsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ScrapsQuery, ScrapsQueryVariables>(ScrapsDocument, options);
-      }
-export function useScrapsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ScrapsQuery, ScrapsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ScrapsQuery, ScrapsQueryVariables>(ScrapsDocument, options);
-        }
+export function useScrapsQuery(
+  baseOptions?: Apollo.QueryHookOptions<ScrapsQuery, ScrapsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ScrapsQuery, ScrapsQueryVariables>(
+    ScrapsDocument,
+    options
+  );
+}
+export function useScrapsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ScrapsQuery, ScrapsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ScrapsQuery, ScrapsQueryVariables>(
+    ScrapsDocument,
+    options
+  );
+}
 export type ScrapsQueryHookResult = ReturnType<typeof useScrapsQuery>;
 export type ScrapsLazyQueryHookResult = ReturnType<typeof useScrapsLazyQuery>;
-export type ScrapsQueryResult = Apollo.QueryResult<ScrapsQuery, ScrapsQueryVariables>;
+export type ScrapsQueryResult = Apollo.QueryResult<
+  ScrapsQuery,
+  ScrapsQueryVariables
+>;
