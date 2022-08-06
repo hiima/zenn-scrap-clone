@@ -73,6 +73,7 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
               // NOTE: フォーカス時のアウトラインを削除
               outline: "none",
               fontSize: "15px",
+              resize: "vertical",
             }}
             value={content}
             onChange={handleContentChange}
@@ -81,6 +82,7 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
                 handleSubmit(event);
               }
             }}
+            spellCheck={false}
           />
           <Divider></Divider>
           {/* NOTE: 右側に配置 */}
