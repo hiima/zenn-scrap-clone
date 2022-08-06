@@ -25,7 +25,7 @@ const Home: NextPage = () => {
                   key={scrap.id}
                   title={scrap.title}
                   postedAt={scrap.postedAt}
-                  commentCount={scrap.comments.length}
+                  commentCount={scrap.commentsAggregate.aggregate?.count || 0}
                 ></ScrapCard>
               );
             })}
