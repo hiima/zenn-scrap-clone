@@ -11,6 +11,7 @@ import { toRelativeDate } from "../../lib/toRelativeDate";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import DeleteIconOutlined from "@mui/icons-material/Delete";
 import EditIconOutlined from "@mui/icons-material/Edit";
+import { DeleteCommentConfirmDialog } from "../DeleteCommentConfirmDialog";
 
 type CommentCardProps = {
   content: string;
@@ -33,43 +34,61 @@ export const CommentCard: React.FC<CommentCardProps> = ({
     setAnchorEl(null);
   };
   const handleDeleteClick = () => {
+    setDialogOpen(true);
     setAnchorEl(null);
   };
 
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   return (
-    <Card sx={{ mt: "0.3rem" }}>
-      <CardContent>
-        <Stack>
-          <Typography variant="subtitle2" color="gray">
-            {toRelativeDate(postedAt)}
-          </Typography>
-          <Box display="flex" justifyContent="flex-end">
-            <Button
-              disableRipple
-              style={{
-                backgroundColor: "transparent",
+    <>
+      <DeleteCommentConfirmDialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+      />
+
+      <Card sx={{ mt: "0.3rem" }}>
+        <CardContent>
+          <Stack>
+            <Typography variant="subtitle2" color="gray">
+              {toRelativeDate(postedAt)}
+            </Typography>
+            <Box display="flex" justifyContent="flex-end">
+              <Button
+                disableRipple
+                style={{
+                  backgroundColor: "transparent",
+                }}
+                endIcon={<KeyboardArrowDownIcon sx={{ color: "gray" }} />}
+                onClick={handleMenuClick}
+              />
+              <Menu
+                anchorEl={anchorEl}
+                open={menuOpen}
+                onClose={handleMenuClose}
+              >
+                <MenuItem disableRipple onClick={handleEditClick}>
+                  <EditIconOutlined />
+                  編集
+                </MenuItem>
+                <MenuItem disableRipple onClick={handleDeleteClick}>
+                  <DeleteIconOutlined sx={{ color: "red" }} />
+                  <Typography color="red">削除</Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+            <Typography
+              sx={{
+                wordWrap: "break-word",
+                whiteSpace: "pre-line",
+                mt: "1rem",
               }}
-              endIcon={<KeyboardArrowDownIcon sx={{ color: "gray" }} />}
-              onClick={handleMenuClick}
-            />
-            <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleMenuClose}>
-              <MenuItem disableRipple onClick={handleEditClick}>
-                <EditIconOutlined />
-                編集
-              </MenuItem>
-              <MenuItem disableRipple onClick={handleDeleteClick}>
-                <DeleteIconOutlined sx={{ color: "red" }} />
-                <Typography color="red">削除</Typography>
-              </MenuItem>
-            </Menu>
-          </Box>
-          <Typography
-            sx={{ wordWrap: "break-word", whiteSpace: "pre-line", mt: "1rem" }}
-          >
-            {content}
-          </Typography>
-        </Stack>
-      </CardContent>
-    </Card>
+            >
+              {content}
+            </Typography>
+          </Stack>
+        </CardContent>
+      </Card>
+    </>
   );
 };
