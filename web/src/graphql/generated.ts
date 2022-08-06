@@ -640,7 +640,13 @@ export type ScrapsQuery = {
     id: string;
     postedAt: string;
     title: string;
-    comments: Array<{ __typename?: "Comments"; id: string }>;
+    commentsAggregate: {
+      __typename?: "CommentsAggregate";
+      aggregate?: {
+        __typename?: "CommentsAggregateFields";
+        count: number;
+      } | null;
+    };
   }>;
 };
 
@@ -650,8 +656,10 @@ export const ScrapsDocument = gql`
       id
       postedAt
       title
-      comments {
-        id
+      commentsAggregate {
+        aggregate {
+          count
+        }
       }
     }
   }

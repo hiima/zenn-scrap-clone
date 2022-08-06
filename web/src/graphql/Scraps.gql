@@ -3,8 +3,10 @@ query Scraps {
     id
     postedAt
     title
-    comments {
-      id
+    commentsAggregate {
+      aggregate {
+        count
+      }
     }
   }
 }
