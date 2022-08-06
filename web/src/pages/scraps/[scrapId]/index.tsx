@@ -63,6 +63,7 @@ const Scrap: NextPage = () => {
                 return (
                   <CommentCard
                     key={comment.id}
+                    commentId={comment.id}
                     content={comment.content}
                     postedAt={comment.postedAt}
                   ></CommentCard>

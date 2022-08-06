@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import Slide from "@mui/material/Slide";
 import Stack from "@mui/material/Stack";
 import type { TransitionProps } from "@mui/material/transitions";
+import { useDeleteCommentMutation } from "../../graphql/generated";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -18,15 +19,25 @@ const Transition = forwardRef(function Transition(
 });
 
 type DeleteCommentConfirmDialogProps = {
+  commentId: string;
   open: boolean;
   onClose: () => void;
 };
 
 export const DeleteCommentConfirmDialog: React.FC<
   DeleteCommentConfirmDialogProps
-> = ({ open, onClose }) => {
+> = ({ commentId, open, onClose }) => {
+  const [mutate] = useDeleteCommentMutation({
+    onCompleted() {
+      onClose();
+    },
+    onError(error) {
+      console.error(error);
+    },
+  });
+
   const handleDeleteClick = () => {
-    onClose();
+    mutate({ variables: { id: commentId } });
   };
 
   return (
@@ -49,7 +60,12 @@ export const DeleteCommentConfirmDialog: React.FC<
           sx={{ mt: "1rem" }}
           justifyContent="space-between"
         >
-          <Button variant="contained" color="inherit" sx={{ width: "6.5rem" }}>
+          <Button
+            variant="contained"
+            color="inherit"
+            sx={{ width: "6.5rem" }}
+            onClick={onClose}
+          >
             キャンセル
           </Button>
           <Button

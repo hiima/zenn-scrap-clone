@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
-import Menu, { MenuProps } from "@mui/material/Menu";
+import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import { toRelativeDate } from "../../lib/toRelativeDate";
@@ -14,11 +14,13 @@ import EditIconOutlined from "@mui/icons-material/Edit";
 import { DeleteCommentConfirmDialog } from "../DeleteCommentConfirmDialog";
 
 type CommentCardProps = {
+  commentId: string;
   content: string;
   postedAt: string;
 };
 
 export const CommentCard: React.FC<CommentCardProps> = ({
+  commentId,
   content,
   postedAt,
 }) => {
@@ -43,6 +45,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
   return (
     <>
       <DeleteCommentConfirmDialog
+        commentId={commentId}
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}
       />
