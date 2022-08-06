@@ -1,0 +1,5 @@
+mutation DeleteComment($id: uuid!) {
+  deleteCommentsByPk(id: $id) {
+    id
+  }
+}

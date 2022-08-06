@@ -1,5 +1,7 @@
+import ChatBubbleOutline from "@mui/icons-material/ChatBubbleOutline";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import type { NextPage } from "next";
 import Error from "next/error";
@@ -9,6 +11,7 @@ import { CommentCard } from "../../../components/CommentCard";
 import { PostCommentForm } from "../../../components/PostCommentForm";
 import { Title } from "../../../components/Title/Title";
 import { useScrapQuery } from "../../../graphql/generated";
+import { toRelativeDate } from "../../../lib/toRelativeDate";
 
 const Scrap: NextPage = () => {
   const router = useRouter();
@@ -31,9 +34,27 @@ const Scrap: NextPage = () => {
       <Container maxWidth="md">
         {!loading && data && (
           <>
-            <Typography variant="body2" color="gray">
-              {`投稿日時: ${data.scrapsByPk?.postedAt}`}
-            </Typography>
+            <Stack direction="row" alignItems="center">
+              <Typography variant="body2" color="gray">
+                {`${
+                  data.scrapsByPk?.postedAt
+                    ? toRelativeDate(data.scrapsByPk?.postedAt) + "に作成"
+                    : ""
+                }`}
+              </Typography>
+              <ChatBubbleOutline
+                sx={{
+                  mt: "0.1rem",
+                  ml: "1rem",
+                  color: "gray",
+                  width: "1rem",
+                  height: "1rem",
+                }}
+              ></ChatBubbleOutline>
+              <Typography variant="body2" color="gray" sx={{ ml: "0.1rem" }}>
+                {data.scrapsByPk?.comments.length}
+              </Typography>
+            </Stack>
             <Typography variant="h5" fontWeight="bold" sx={{ mt: "1rem" }}>
               {data.scrapsByPk?.title}
             </Typography>
@@ -42,8 +63,10 @@ const Scrap: NextPage = () => {
                 return (
                   <CommentCard
                     key={comment.id}
+                    commentId={comment.id}
                     content={comment.content}
                     postedAt={comment.postedAt}
+                    refetch={refetch}
                   ></CommentCard>
                 );
               })

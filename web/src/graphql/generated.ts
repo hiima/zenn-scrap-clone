@@ -649,6 +649,15 @@ export type CreateScrapMutation = {
   insertScrapsOne?: { __typename?: "Scraps"; id: string } | null;
 };
 
+export type DeleteCommentMutationVariables = Exact<{
+  id: Scalars["uuid"];
+}>;
+
+export type DeleteCommentMutation = {
+  __typename?: "mutation_root";
+  deleteCommentsByPk?: { __typename?: "Comments"; id: string } | null;
+};
+
 export type ScrapQueryVariables = Exact<{
   scrapId: Scalars["uuid"];
 }>;
@@ -787,6 +796,56 @@ export type CreateScrapMutationResult =
 export type CreateScrapMutationOptions = Apollo.BaseMutationOptions<
   CreateScrapMutation,
   CreateScrapMutationVariables
+>;
+export const DeleteCommentDocument = gql`
+  mutation DeleteComment($id: uuid!) {
+    deleteCommentsByPk(id: $id) {
+      id
+    }
+  }
+`;
+export type DeleteCommentMutationFn = Apollo.MutationFunction<
+  DeleteCommentMutation,
+  DeleteCommentMutationVariables
+>;
+
+/**
+ * __useDeleteCommentMutation__
+ *
+ * To run a mutation, you first call `useDeleteCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCommentMutation, { data, loading, error }] = useDeleteCommentMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteCommentMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    DeleteCommentMutation,
+    DeleteCommentMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    DeleteCommentMutation,
+    DeleteCommentMutationVariables
+  >(DeleteCommentDocument, options);
+}
+export type DeleteCommentMutationHookResult = ReturnType<
+  typeof useDeleteCommentMutation
+>;
+export type DeleteCommentMutationResult =
+  Apollo.MutationResult<DeleteCommentMutation>;
+export type DeleteCommentMutationOptions = Apollo.BaseMutationOptions<
+  DeleteCommentMutation,
+  DeleteCommentMutationVariables
 >;
 export const ScrapDocument = gql`
   query Scrap($scrapId: uuid!) {
