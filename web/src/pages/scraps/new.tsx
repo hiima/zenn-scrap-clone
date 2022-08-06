@@ -4,10 +4,29 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
+import { uuid } from "uuidv4";
 import { Bar } from "../../components/Bar";
+import { useCreateScrapMutation } from "../../graphql/generated";
 
 const New: NextPage = () => {
+  const router = useRouter();
+  const [mutate] = useCreateScrapMutation({
+    onCompleted({ insertScrapsOne }) {
+      // NOTE: 通常起こり得ないケース
+      if (!insertScrapsOne) {
+        console.error("scrap was created but not returned scrap id");
+        return;
+      }
+
+      router.push(`/scraps/${insertScrapsOne.id}`);
+    },
+    onError(error) {
+      console.error(error);
+    },
+  });
+
   const [title, setTitle] = useState("");
 
   const handleTitleChange = (
@@ -19,10 +38,17 @@ const New: NextPage = () => {
   // NOTE: タイトルが入力されなければスクラップは作成できないようにする
   const canPost = () => title.length !== 0;
 
-  const handleCreateClick = () => {
-    // TODO: mutate
-    // TODO: comments.idから求めたパスに遷移
-    console.debug("hi");
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    mutate({
+      variables: {
+        input: {
+          title,
+          id: uuid(),
+        },
+      },
+    });
   };
 
   return (
@@ -30,6 +56,8 @@ const New: NextPage = () => {
       <CssBaseline />
       <Bar />
       <Grid
+        component="form"
+        onSubmit={handleSubmit}
         container
         spacing={5}
         direction="column"
@@ -56,11 +84,7 @@ const New: NextPage = () => {
           ></TextField>
         </Grid>
         <Grid item>
-          <Button
-            variant="contained"
-            onClick={handleCreateClick}
-            disabled={!canPost()}
-          >
+          <Button type="submit" variant="contained" disabled={!canPost()}>
             スクラップを作成
           </Button>
         </Grid>
