@@ -1,0 +1,12 @@
+query Scrap($scrapId: uuid!) {
+  scrapsByPk(id: $scrapId) {
+    id
+    title
+    postedAt
+    comments {
+      id
+      content
+      postedAt
+    }
+  }
+}

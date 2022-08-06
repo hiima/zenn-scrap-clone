@@ -631,6 +631,15 @@ export type Subscription_RootScrapsByPkArgs = {
   id: Scalars["uuid"];
 };
 
+export type CreateCommentMutationVariables = Exact<{
+  input: CommentsInsertInput;
+}>;
+
+export type CreateCommentMutation = {
+  __typename?: "mutation_root";
+  insertCommentsOne?: { __typename?: "Comments"; id: string } | null;
+};
+
 export type CreateScrapMutationVariables = Exact<{
   input: ScrapsInsertInput;
 }>;
@@ -638,6 +647,26 @@ export type CreateScrapMutationVariables = Exact<{
 export type CreateScrapMutation = {
   __typename?: "mutation_root";
   insertScrapsOne?: { __typename?: "Scraps"; id: string } | null;
+};
+
+export type ScrapQueryVariables = Exact<{
+  scrapId: Scalars["uuid"];
+}>;
+
+export type ScrapQuery = {
+  __typename?: "query_root";
+  scrapsByPk?: {
+    __typename?: "Scraps";
+    id: string;
+    title: string;
+    postedAt: string;
+    comments: Array<{
+      __typename?: "Comments";
+      id: string;
+      content: string;
+      postedAt: string;
+    }>;
+  } | null;
 };
 
 export type ScrapsQueryVariables = Exact<{ [key: string]: never }>;
@@ -659,6 +688,56 @@ export type ScrapsQuery = {
   }>;
 };
 
+export const CreateCommentDocument = gql`
+  mutation CreateComment($input: CommentsInsertInput!) {
+    insertCommentsOne(object: $input) {
+      id
+    }
+  }
+`;
+export type CreateCommentMutationFn = Apollo.MutationFunction<
+  CreateCommentMutation,
+  CreateCommentMutationVariables
+>;
+
+/**
+ * __useCreateCommentMutation__
+ *
+ * To run a mutation, you first call `useCreateCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCommentMutation, { data, loading, error }] = useCreateCommentMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateCommentMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateCommentMutation,
+    CreateCommentMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreateCommentMutation,
+    CreateCommentMutationVariables
+  >(CreateCommentDocument, options);
+}
+export type CreateCommentMutationHookResult = ReturnType<
+  typeof useCreateCommentMutation
+>;
+export type CreateCommentMutationResult =
+  Apollo.MutationResult<CreateCommentMutation>;
+export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<
+  CreateCommentMutation,
+  CreateCommentMutationVariables
+>;
 export const CreateScrapDocument = gql`
   mutation CreateScrap($input: ScrapsInsertInput!) {
     insertScrapsOne(object: $input) {
@@ -708,6 +787,61 @@ export type CreateScrapMutationResult =
 export type CreateScrapMutationOptions = Apollo.BaseMutationOptions<
   CreateScrapMutation,
   CreateScrapMutationVariables
+>;
+export const ScrapDocument = gql`
+  query Scrap($scrapId: uuid!) {
+    scrapsByPk(id: $scrapId) {
+      id
+      title
+      postedAt
+      comments {
+        id
+        content
+        postedAt
+      }
+    }
+  }
+`;
+
+/**
+ * __useScrapQuery__
+ *
+ * To run a query within a React component, call `useScrapQuery` and pass it any options that fit your needs.
+ * When your component renders, `useScrapQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useScrapQuery({
+ *   variables: {
+ *      scrapId: // value for 'scrapId'
+ *   },
+ * });
+ */
+export function useScrapQuery(
+  baseOptions: Apollo.QueryHookOptions<ScrapQuery, ScrapQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ScrapQuery, ScrapQueryVariables>(
+    ScrapDocument,
+    options
+  );
+}
+export function useScrapLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ScrapQuery, ScrapQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ScrapQuery, ScrapQueryVariables>(
+    ScrapDocument,
+    options
+  );
+}
+export type ScrapQueryHookResult = ReturnType<typeof useScrapQuery>;
+export type ScrapLazyQueryHookResult = ReturnType<typeof useScrapLazyQuery>;
+export type ScrapQueryResult = Apollo.QueryResult<
+  ScrapQuery,
+  ScrapQueryVariables
 >;
 export const ScrapsDocument = gql`
   query Scraps {
