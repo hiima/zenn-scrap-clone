@@ -12,7 +12,9 @@ const Scrap: NextPage = () => {
   const router = useRouter();
   const scrapId = router.query.scrapId as string;
 
-  const { data, loading, error } = useScrapQuery({ variables: { scrapId } });
+  const { data, loading, error, refetch } = useScrapQuery({
+    variables: { scrapId },
+  });
 
   if (error) return <Error statusCode={500} />;
 
@@ -38,7 +40,7 @@ const Scrap: NextPage = () => {
             >
               最初のコメントを追加しましょう。
             </Typography>
-            <PostCommentForm />
+            <PostCommentForm scrapId={scrapId} refetch={refetch} />
           </>
         )}
       </Container>

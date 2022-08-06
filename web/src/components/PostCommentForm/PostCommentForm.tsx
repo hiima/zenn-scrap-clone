@@ -5,8 +5,27 @@ import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { ChangeEvent, useState } from "react";
+import { useCreateCommentMutation } from "../../graphql/generated";
+import { uuid } from "uuidv4";
 
-export const PostCommentForm: React.FC = () => {
+type PostCommentFormProps = {
+  refetch: () => void;
+  scrapId: string;
+};
+
+export const PostCommentForm: React.FC<PostCommentFormProps> = ({
+  refetch,
+  scrapId,
+}) => {
+  const [mutate] = useCreateCommentMutation({
+    onCompleted() {
+      setContent("");
+      refetch();
+    },
+    onError() {
+      console.error();
+    },
+  });
   const [content, setContent] = useState("");
 
   const handleContentChange = (
@@ -20,10 +39,19 @@ export const PostCommentForm: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setContent("");
+    mutate({
+      variables: {
+        input: {
+          id: uuid(),
+          content,
+          scrapId,
+        },
+      },
+    });
   };
 
   return (
+    // NOTE: 入力欄の高さに応じて伸びるようにしている
     <Card sx={{ height: "auto", mt: "1rem" }}>
       <CardContent>
         <Box component="form" onSubmit={handleSubmit}>
