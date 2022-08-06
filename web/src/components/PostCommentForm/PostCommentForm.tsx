@@ -3,7 +3,9 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
+import Stack from "@mui/material/Stack";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
+import Typography from "@mui/material/Typography";
 import { ChangeEvent, useState } from "react";
 import { useCreateCommentMutation } from "../../graphql/generated";
 import { uuid } from "uuidv4";
@@ -83,14 +85,23 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
           <Divider></Divider>
           {/* NOTE: 右側に配置 */}
           <Box display="flex" justifyContent="flex-end">
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={!canSubmit()}
-              sx={{ mt: "1.5rem" }}
-            >
-              投稿する
-            </Button>
+            <Stack direction="column">
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={!canSubmit()}
+                sx={{ mt: "1.5rem" }}
+              >
+                投稿する
+              </Button>
+              <Typography
+                fontSize="0.6rem"
+                textAlign="right"
+                sx={{ mt: "0.2rem", mr: "0.1rem" }}
+              >
+                ⌘+Enterで送信
+              </Typography>
+            </Stack>
           </Box>
         </Box>
       </CardContent>

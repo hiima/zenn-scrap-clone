@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import { uuid } from "uuidv4";
 import { Bar } from "../../components/Bar";
+import { Title } from "../../components/Title/Title";
 import { useCreateScrapMutation } from "../../graphql/generated";
 
 const New: NextPage = () => {
@@ -57,6 +58,7 @@ const New: NextPage = () => {
 
   return (
     <>
+      <Title text="新しいスクラップの作成"></Title>
       <CssBaseline />
       <Bar />
       <Grid
