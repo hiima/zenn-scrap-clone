@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { Title } from "../components/Title/Title";
 
 const Top: NextPage = () => {
   const router = useRouter();
@@ -10,7 +11,7 @@ const Top: NextPage = () => {
     router.push("/scraps");
   }, [router]);
 
-  return null;
+  return <Title></Title>;
 };
 
 export default Top;
