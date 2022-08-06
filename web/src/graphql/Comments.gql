@@ -1,0 +1,7 @@
+query Comments($scrapId: uuid!) {
+  comments(where: { scrapId: { _eq: $scrapId } }) {
+    id
+    content
+    postedAt
+  }
+}

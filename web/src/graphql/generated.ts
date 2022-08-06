@@ -631,6 +631,20 @@ export type Subscription_RootScrapsByPkArgs = {
   id: Scalars["uuid"];
 };
 
+export type CommentsQueryVariables = Exact<{
+  scrapId: Scalars["uuid"];
+}>;
+
+export type CommentsQuery = {
+  __typename?: "query_root";
+  comments: Array<{
+    __typename?: "Comments";
+    id: string;
+    content: string;
+    postedAt: string;
+  }>;
+};
+
 export type CreateScrapMutationVariables = Exact<{
   input: ScrapsInsertInput;
 }>;
@@ -659,6 +673,61 @@ export type ScrapsQuery = {
   }>;
 };
 
+export const CommentsDocument = gql`
+  query Comments($scrapId: uuid!) {
+    comments(where: { scrapId: { _eq: $scrapId } }) {
+      id
+      content
+      postedAt
+    }
+  }
+`;
+
+/**
+ * __useCommentsQuery__
+ *
+ * To run a query within a React component, call `useCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCommentsQuery({
+ *   variables: {
+ *      scrapId: // value for 'scrapId'
+ *   },
+ * });
+ */
+export function useCommentsQuery(
+  baseOptions: Apollo.QueryHookOptions<CommentsQuery, CommentsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<CommentsQuery, CommentsQueryVariables>(
+    CommentsDocument,
+    options
+  );
+}
+export function useCommentsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CommentsQuery,
+    CommentsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<CommentsQuery, CommentsQueryVariables>(
+    CommentsDocument,
+    options
+  );
+}
+export type CommentsQueryHookResult = ReturnType<typeof useCommentsQuery>;
+export type CommentsLazyQueryHookResult = ReturnType<
+  typeof useCommentsLazyQuery
+>;
+export type CommentsQueryResult = Apollo.QueryResult<
+  CommentsQuery,
+  CommentsQueryVariables
+>;
 export const CreateScrapDocument = gql`
   mutation CreateScrap($input: ScrapsInsertInput!) {
     insertScrapsOne(object: $input) {
