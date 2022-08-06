@@ -15,7 +15,7 @@ const Home: NextPage = () => {
     <>
       <CssBaseline />
       <Bar />
-      <Container maxWidth="sm">
+      <Container maxWidth="md">
         <>
           {!loading &&
             data &&
