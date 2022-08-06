@@ -631,20 +631,6 @@ export type Subscription_RootScrapsByPkArgs = {
   id: Scalars["uuid"];
 };
 
-export type CommentsQueryVariables = Exact<{
-  scrapId: Scalars["uuid"];
-}>;
-
-export type CommentsQuery = {
-  __typename?: "query_root";
-  comments: Array<{
-    __typename?: "Comments";
-    id: string;
-    content: string;
-    postedAt: string;
-  }>;
-};
-
 export type CreateScrapMutationVariables = Exact<{
   input: ScrapsInsertInput;
 }>;
@@ -652,6 +638,26 @@ export type CreateScrapMutationVariables = Exact<{
 export type CreateScrapMutation = {
   __typename?: "mutation_root";
   insertScrapsOne?: { __typename?: "Scraps"; id: string } | null;
+};
+
+export type ScrapQueryVariables = Exact<{
+  scrapId: Scalars["uuid"];
+}>;
+
+export type ScrapQuery = {
+  __typename?: "query_root";
+  scrapsByPk?: {
+    __typename?: "Scraps";
+    id: string;
+    title: string;
+    postedAt: string;
+    comments: Array<{
+      __typename?: "Comments";
+      id: string;
+      content: string;
+      postedAt: string;
+    }>;
+  } | null;
 };
 
 export type ScrapsQueryVariables = Exact<{ [key: string]: never }>;
@@ -673,61 +679,6 @@ export type ScrapsQuery = {
   }>;
 };
 
-export const CommentsDocument = gql`
-  query Comments($scrapId: uuid!) {
-    comments(where: { scrapId: { _eq: $scrapId } }) {
-      id
-      content
-      postedAt
-    }
-  }
-`;
-
-/**
- * __useCommentsQuery__
- *
- * To run a query within a React component, call `useCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCommentsQuery({
- *   variables: {
- *      scrapId: // value for 'scrapId'
- *   },
- * });
- */
-export function useCommentsQuery(
-  baseOptions: Apollo.QueryHookOptions<CommentsQuery, CommentsQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<CommentsQuery, CommentsQueryVariables>(
-    CommentsDocument,
-    options
-  );
-}
-export function useCommentsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    CommentsQuery,
-    CommentsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<CommentsQuery, CommentsQueryVariables>(
-    CommentsDocument,
-    options
-  );
-}
-export type CommentsQueryHookResult = ReturnType<typeof useCommentsQuery>;
-export type CommentsLazyQueryHookResult = ReturnType<
-  typeof useCommentsLazyQuery
->;
-export type CommentsQueryResult = Apollo.QueryResult<
-  CommentsQuery,
-  CommentsQueryVariables
->;
 export const CreateScrapDocument = gql`
   mutation CreateScrap($input: ScrapsInsertInput!) {
     insertScrapsOne(object: $input) {
@@ -777,6 +728,61 @@ export type CreateScrapMutationResult =
 export type CreateScrapMutationOptions = Apollo.BaseMutationOptions<
   CreateScrapMutation,
   CreateScrapMutationVariables
+>;
+export const ScrapDocument = gql`
+  query Scrap($scrapId: uuid!) {
+    scrapsByPk(id: $scrapId) {
+      id
+      title
+      postedAt
+      comments {
+        id
+        content
+        postedAt
+      }
+    }
+  }
+`;
+
+/**
+ * __useScrapQuery__
+ *
+ * To run a query within a React component, call `useScrapQuery` and pass it any options that fit your needs.
+ * When your component renders, `useScrapQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useScrapQuery({
+ *   variables: {
+ *      scrapId: // value for 'scrapId'
+ *   },
+ * });
+ */
+export function useScrapQuery(
+  baseOptions: Apollo.QueryHookOptions<ScrapQuery, ScrapQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ScrapQuery, ScrapQueryVariables>(
+    ScrapDocument,
+    options
+  );
+}
+export function useScrapLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ScrapQuery, ScrapQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ScrapQuery, ScrapQueryVariables>(
+    ScrapDocument,
+    options
+  );
+}
+export type ScrapQueryHookResult = ReturnType<typeof useScrapQuery>;
+export type ScrapLazyQueryHookResult = ReturnType<typeof useScrapLazyQuery>;
+export type ScrapQueryResult = Apollo.QueryResult<
+  ScrapQuery,
+  ScrapQueryVariables
 >;
 export const ScrapsDocument = gql`
   query Scraps {
