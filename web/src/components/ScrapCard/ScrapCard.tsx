@@ -5,7 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import ChatBubbleOutline from "@mui/icons-material/ChatBubbleOutline";
-import { toRelativeDate } from "../../../lib/formatPostedAt";
+import { toRelativeDate } from "../../lib/formatPostedAt";
 
 type ScrapCardProps = {
   id: string;
