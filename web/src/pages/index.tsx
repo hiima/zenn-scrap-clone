@@ -3,6 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import type { NextPage } from "next";
 import Error from "next/error";
 import { Bar } from "../components/Bar";
+import { ScrapCard } from "../components/ScrapCard";
 import { useScrapsQuery } from "../graphql/generated";
 
 const Home: NextPage = () => {
@@ -15,7 +16,20 @@ const Home: NextPage = () => {
       <CssBaseline />
       <Bar />
       <Container maxWidth="sm">
-        <>{!loading && data && <a>{JSON.stringify(data, null, 4)}</a>}</>
+        <>
+          {!loading &&
+            data &&
+            data.scraps.map((scrap) => {
+              return (
+                <ScrapCard
+                  key={scrap.id}
+                  title={scrap.title}
+                  postedAt={scrap.postedAt}
+                  commentCount={scrap.comments.length}
+                ></ScrapCard>
+              );
+            })}
+        </>
       </Container>
     </>
   );
