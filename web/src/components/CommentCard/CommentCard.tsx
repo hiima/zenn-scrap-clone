@@ -17,16 +17,15 @@ export const CommentCard: React.FC<CommentCardProps> = ({
   return (
     <Card sx={{ mt: "0.3rem" }}>
       <CardContent>
-        <Stack direction="row" justifyContent="space-between">
-          <Stack>
-            <Typography>
-              {/* NOTE: 改行コードがあればそこで改行するようにしている */}
-              <pre style={{ fontFamily: "inherit" }}>{content}</pre>
-            </Typography>
-            <Typography variant="subtitle2" color="gray">
-              {toRelativeDate(postedAt)}
-            </Typography>
-          </Stack>
+        <Stack>
+          <Typography variant="subtitle2" color="gray">
+            {toRelativeDate(postedAt)}
+          </Typography>
+          <Typography
+            sx={{ wordWrap: "break-word", whiteSpace: "pre-line", mt: "1rem" }}
+          >
+            {content}
+          </Typography>
         </Stack>
       </CardContent>
     </Card>
