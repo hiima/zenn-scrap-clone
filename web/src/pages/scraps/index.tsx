@@ -23,6 +23,7 @@ const Home: NextPage = () => {
               return (
                 <ScrapCard
                   key={scrap.id}
+                  id={scrap.id}
                   title={scrap.title}
                   postedAt={scrap.postedAt}
                   commentCount={scrap.commentsAggregate.aggregate?.count || 0}
