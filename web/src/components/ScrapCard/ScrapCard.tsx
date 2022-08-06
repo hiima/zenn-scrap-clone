@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import ChatBubbleOutline from "@mui/icons-material/ChatBubbleOutline";
@@ -16,19 +17,25 @@ export const ScrapCard: React.FC<ScrapCardProps> = ({
   commentCount,
 }) => {
   return (
-    <Card sx={{ mt: "0.3rem", padding: "1.2rem" }}>
-      <Stack direction="row" justifyContent="space-between">
-        <Stack>
-          <Typography variant="h6" fontWeight="bold">
-            {title}
-          </Typography>
-          <Typography color="gray">{postedAt}</Typography>
+    <Card sx={{ mt: "0.3rem" }}>
+      <CardContent>
+        <Stack direction="row" justifyContent="space-between">
+          <Stack>
+            <Typography variant="subtitle1" fontWeight="bold">
+              {title}
+            </Typography>
+            <Typography variant="subtitle2" color="gray">
+              {postedAt}
+            </Typography>
+          </Stack>
+          <Stack alignItems="center">
+            <ChatBubbleOutline sx={{ color: "gray" }}></ChatBubbleOutline>
+            <Typography variant="subtitle2" color="gray">
+              {commentCount}
+            </Typography>
+          </Stack>
         </Stack>
-        <Stack alignItems="center">
-          <ChatBubbleOutline sx={{ color: "gray" }}></ChatBubbleOutline>
-          <Typography color="gray">{commentCount}</Typography>
-        </Stack>
-      </Stack>
+      </CardContent>
     </Card>
   );
 };
