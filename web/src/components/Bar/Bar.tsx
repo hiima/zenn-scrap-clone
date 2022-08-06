@@ -7,11 +7,12 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import React from "react";
+import { useRouter } from "next/router";
 
 export const Bar: React.FC = () => {
-  const handleAddNewClick = () => {
-    console.debug("YO");
-  };
+  const router = useRouter();
+
+  const handleAddNewClick = () => router.push("/scraps/new");
 
   return (
     <AppBar position="static" sx={{ mb: "1rem" }}>
