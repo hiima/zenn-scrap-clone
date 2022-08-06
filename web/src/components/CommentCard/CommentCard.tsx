@@ -3,6 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { toRelativeDate } from "../../../lib/formatPostedAt";
 
 type CommentCardProps = {
   content: string;
@@ -23,7 +24,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
               <pre style={{ fontFamily: "inherit" }}>{content}</pre>
             </Typography>
             <Typography variant="subtitle2" color="gray">
-              {postedAt}
+              {toRelativeDate(postedAt)}
             </Typography>
           </Stack>
         </Stack>

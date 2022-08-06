@@ -5,6 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import ChatBubbleOutline from "@mui/icons-material/ChatBubbleOutline";
+import { toRelativeDate } from "../../../lib/formatPostedAt";
 
 type ScrapCardProps = {
   id: string;
@@ -29,7 +30,7 @@ export const ScrapCard: React.FC<ScrapCardProps> = ({
                 {title}
               </Typography>
               <Typography variant="subtitle2" color="gray">
-                {postedAt}
+                {toRelativeDate(postedAt)}
               </Typography>
             </Stack>
             <Stack alignItems="center">
