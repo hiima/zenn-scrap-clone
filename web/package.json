@@ -9,7 +9,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint --dir src",
+    "fix": "prettier --write 'src/**/*.{js,jsx,ts,tsx,gql,css}'",
     "generate": "graphql-codegen"
   },
   "dependencies": {
