@@ -6,6 +6,7 @@ import Error from "next/error";
 import { useRouter } from "next/router";
 import { Bar } from "../../../components/Bar";
 import { PostCommentForm } from "../../../components/PostCommentForm";
+import { Title } from "../../../components/Title/Title";
 import { useScrapQuery } from "../../../graphql/generated";
 
 const Scrap: NextPage = () => {
@@ -20,6 +21,7 @@ const Scrap: NextPage = () => {
 
   return (
     <>
+      <Title text={data?.scrapsByPk?.title}></Title>
       <CssBaseline />
       <Bar />
       <Container maxWidth="md">

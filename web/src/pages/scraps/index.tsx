@@ -4,6 +4,7 @@ import type { NextPage } from "next";
 import Error from "next/error";
 import { Bar } from "../../components/Bar";
 import { ScrapCard } from "../../components/ScrapCard";
+import { Title } from "../../components/Title/Title";
 import { useScrapsQuery } from "../../graphql/generated";
 
 const Home: NextPage = () => {
@@ -13,6 +14,7 @@ const Home: NextPage = () => {
 
   return (
     <>
+      <Title text="スクラップ一覧"></Title>
       <CssBaseline />
       <Bar />
       <Container maxWidth="md">
