@@ -9,6 +9,7 @@ import { CommentCard } from "../../../components/CommentCard";
 import { PostCommentForm } from "../../../components/PostCommentForm";
 import { Title } from "../../../components/Title/Title";
 import { useScrapQuery } from "../../../graphql/generated";
+import { toRelativeDate } from "../../../lib/toRelativeDate";
 
 const Scrap: NextPage = () => {
   const router = useRouter();
@@ -32,7 +33,11 @@ const Scrap: NextPage = () => {
         {!loading && data && (
           <>
             <Typography variant="body2" color="gray">
-              {`投稿日時: ${data.scrapsByPk?.postedAt}`}
+              {`${
+                data.scrapsByPk?.postedAt
+                  ? toRelativeDate(data.scrapsByPk?.postedAt) + "に作成"
+                  : ""
+              }`}
             </Typography>
             <Typography variant="h5" fontWeight="bold" sx={{ mt: "1rem" }}>
               {data.scrapsByPk?.title}
