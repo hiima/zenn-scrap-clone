@@ -1,0 +1,5 @@
+mutation CreateScrap($input: ScrapsInsertInput!) {
+  insertScrapsOne(object: $input) {
+    id
+  }
+}

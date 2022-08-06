@@ -631,6 +631,15 @@ export type Subscription_RootScrapsByPkArgs = {
   id: Scalars["uuid"];
 };
 
+export type CreateScrapMutationVariables = Exact<{
+  input: ScrapsInsertInput;
+}>;
+
+export type CreateScrapMutation = {
+  __typename?: "mutation_root";
+  insertScrapsOne?: { __typename?: "Scraps"; id: string } | null;
+};
+
 export type ScrapsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ScrapsQuery = {
@@ -650,6 +659,56 @@ export type ScrapsQuery = {
   }>;
 };
 
+export const CreateScrapDocument = gql`
+  mutation CreateScrap($input: ScrapsInsertInput!) {
+    insertScrapsOne(object: $input) {
+      id
+    }
+  }
+`;
+export type CreateScrapMutationFn = Apollo.MutationFunction<
+  CreateScrapMutation,
+  CreateScrapMutationVariables
+>;
+
+/**
+ * __useCreateScrapMutation__
+ *
+ * To run a mutation, you first call `useCreateScrapMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateScrapMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createScrapMutation, { data, loading, error }] = useCreateScrapMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateScrapMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateScrapMutation,
+    CreateScrapMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreateScrapMutation, CreateScrapMutationVariables>(
+    CreateScrapDocument,
+    options
+  );
+}
+export type CreateScrapMutationHookResult = ReturnType<
+  typeof useCreateScrapMutation
+>;
+export type CreateScrapMutationResult =
+  Apollo.MutationResult<CreateScrapMutation>;
+export type CreateScrapMutationOptions = Apollo.BaseMutationOptions<
+  CreateScrapMutation,
+  CreateScrapMutationVariables
+>;
 export const ScrapsDocument = gql`
   query Scraps {
     scraps(orderBy: { postedAt: desc }) {
