@@ -35,10 +35,15 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
   };
 
   // NOTE: コメントが入力されなければスクラップは作成できないようにする
-  const canPost = () => content.length !== 0;
+  const canSubmit = () => content.length !== 0;
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (
+    event:
+      | React.FormEvent<HTMLFormElement>
+      | React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
     event.preventDefault();
+
     mutate({
       variables: {
         input: {
@@ -69,6 +74,11 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
             }}
             value={content}
             onChange={handleContentChange}
+            onKeyDown={(event) => {
+              if (event.metaKey && event.key === "Enter") {
+                handleSubmit(event);
+              }
+            }}
           />
           <Divider></Divider>
           {/* NOTE: 右側に配置 */}
@@ -76,7 +86,7 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
             <Button
               type="submit"
               variant="contained"
-              disabled={!canPost()}
+              disabled={!canSubmit()}
               sx={{ mt: "1.5rem" }}
             >
               投稿する

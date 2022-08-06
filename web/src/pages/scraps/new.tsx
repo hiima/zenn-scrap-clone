@@ -36,9 +36,13 @@ const New: NextPage = () => {
   };
 
   // NOTE: タイトルが入力されなければスクラップは作成できないようにする
-  const canPost = () => title.length !== 0;
+  const canSubmit = () => title.length !== 0;
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (
+    event:
+      | React.FormEvent<HTMLFormElement>
+      | React.KeyboardEvent<HTMLDivElement>
+  ) => {
     event.preventDefault();
 
     mutate({
@@ -81,10 +85,15 @@ const New: NextPage = () => {
             value={title}
             sx={{ width: "30rem" }}
             onChange={handleTitleChange}
+            onKeyDown={(event) => {
+              if (event.metaKey && event.key === "Enter") {
+                handleSubmit(event);
+              }
+            }}
           ></TextField>
         </Grid>
         <Grid item>
-          <Button type="submit" variant="contained" disabled={!canPost()}>
+          <Button type="submit" variant="contained" disabled={!canSubmit()}>
             スクラップを作成
           </Button>
         </Grid>
