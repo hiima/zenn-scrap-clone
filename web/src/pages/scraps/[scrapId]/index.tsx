@@ -13,6 +13,7 @@ const Scrap: NextPage = () => {
   const router = useRouter();
   const scrapId = router.query.scrapId as string;
 
+  // FIXME: ページ表示時に2回リクエストされてしまう
   const { data, loading, error, refetch } = useScrapQuery({
     variables: { scrapId },
   });
