@@ -5,6 +5,7 @@ import type { NextPage } from "next";
 import Error from "next/error";
 import { useRouter } from "next/router";
 import { Bar } from "../../../components/Bar";
+import { CommentCard } from "../../../components/CommentCard";
 import { PostCommentForm } from "../../../components/PostCommentForm";
 import { Title } from "../../../components/Title/Title";
 import { useScrapQuery } from "../../../graphql/generated";
@@ -13,11 +14,14 @@ const Scrap: NextPage = () => {
   const router = useRouter();
   const scrapId = router.query.scrapId as string;
 
+  // FIXME: ページ表示時に2回リクエストされてしまう
   const { data, loading, error, refetch } = useScrapQuery({
     variables: { scrapId },
   });
 
   if (error) return <Error statusCode={500} />;
+
+  const comments = data?.scrapsByPk?.comments || [];
 
   return (
     <>
@@ -33,15 +37,28 @@ const Scrap: NextPage = () => {
             <Typography variant="h5" fontWeight="bold" sx={{ mt: "1rem" }}>
               {data.scrapsByPk?.title}
             </Typography>
-            {/* TODO： コメントがない場合のみ表示する */}
-            <Typography
-              variant="body1"
-              fontWeight="bold"
-              color="gray"
-              sx={{ mt: "1rem" }}
-            >
-              最初のコメントを追加しましょう。
-            </Typography>
+            {comments.length > 0 ? (
+              comments.map((comment) => {
+                return (
+                  <CommentCard
+                    key={comment.id}
+                    content={comment.content}
+                    postedAt={comment.postedAt}
+                  ></CommentCard>
+                );
+              })
+            ) : (
+              // NOTE コメントがない場合のみ表示する
+              <Typography
+                variant="body1"
+                fontWeight="bold"
+                color="gray"
+                sx={{ mt: "1rem" }}
+              >
+                最初のコメントを追加しましょう。
+              </Typography>
+            )}
+
             <PostCommentForm scrapId={scrapId} refetch={refetch} />
           </>
         )}
