@@ -640,25 +640,18 @@ export type ScrapsQuery = {
     id: string;
     postedAt: string;
     title: string;
-    comments: Array<{
-      __typename?: "Comments";
-      id: string;
-      content: string;
-      postedAt: string;
-    }>;
+    comments: Array<{ __typename?: "Comments"; id: string }>;
   }>;
 };
 
 export const ScrapsDocument = gql`
   query Scraps {
-    scraps {
+    scraps(orderBy: { postedAt: desc }) {
       id
       postedAt
       title
       comments {
         id
-        content
-        postedAt
       }
     }
   }
