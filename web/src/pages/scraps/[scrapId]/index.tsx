@@ -66,6 +66,7 @@ const Scrap: NextPage = () => {
                     commentId={comment.id}
                     content={comment.content}
                     postedAt={comment.postedAt}
+                    refetch={refetch}
                   ></CommentCard>
                 );
               })

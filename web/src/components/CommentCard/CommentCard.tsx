@@ -17,12 +17,14 @@ type CommentCardProps = {
   commentId: string;
   content: string;
   postedAt: string;
+  refetch: () => void;
 };
 
 export const CommentCard: React.FC<CommentCardProps> = ({
   commentId,
   content,
   postedAt,
+  refetch,
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const menuOpen = Boolean(anchorEl);
@@ -48,6 +50,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
         commentId={commentId}
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}
+        refetch={refetch}
       />
 
       <Card sx={{ mt: "0.3rem" }}>
