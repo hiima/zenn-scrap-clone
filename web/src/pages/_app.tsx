@@ -10,6 +10,8 @@ const theme = createTheme({
       default: "#edf2f7",
     },
   },
+  // これだとボタン以外のboxShadowも消えてしまう
+  // shadows: Array(25).fill("none") as Shadows,
 });
 
 const client = new ApolloClient({

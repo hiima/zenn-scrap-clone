@@ -91,7 +91,12 @@ const New: NextPage = () => {
           ></TextField>
         </Grid>
         <Grid item>
-          <Button type="submit" variant="contained" disabled={!canSubmit()}>
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={!canSubmit()}
+            sx={{ boxShadow: 0 }}
+          >
             スクラップを作成
           </Button>
         </Grid>
