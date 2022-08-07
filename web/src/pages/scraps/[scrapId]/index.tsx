@@ -8,7 +8,7 @@ import Error from "next/error";
 import { useRouter } from "next/router";
 import { Bar } from "../../../components/Bar";
 import { CommentCardList } from "../../../components/CommentCardList";
-import { PostCommentForm } from "../../../components/PostCommentForm";
+import { PostCommentForm, Mode } from "../../../components/PostCommentForm";
 import { Title } from "../../../components/Title";
 import { useScrapQuery } from "../../../graphql/generated";
 import { toRelativeDate } from "../../../lib/toRelativeDate";
@@ -78,8 +78,8 @@ const Scrap: NextPage = () => {
             )}
 
             <PostCommentForm
+              mode={Mode.New}
               afterMutationCompleted={refetch}
-              mode="NEW"
               parentScrapId={scrapId}
             />
           </>

@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import { toRelativeDate } from "../../lib/toRelativeDate";
 import { DeleteCommentConfirmDialog } from "./DeleteCommentConfirmDialog";
 import { CommentCardMenu } from "./CommentCardMenu";
-import { PostCommentForm } from "../PostCommentForm";
+import { Mode, PostCommentForm } from "../PostCommentForm";
 
 type CommentCardProps = {
   parentScrapId: string;
@@ -62,15 +62,14 @@ export const CommentCard: React.FC<CommentCardProps> = ({
               </Typography>
             ) : (
               <PostCommentForm
+                mode={Mode.Edit}
                 afterMutationCompleted={() => {
                   // NOTE: コメントの編集が終わったら、コメント欄を読み取り専用に戻す
                   setIsCommentReadOnly(true);
                   afterMutationCompleted();
                 }}
-                mode={"EDIT"}
                 onCancel={() => setIsCommentReadOnly(true)}
                 originContent={content}
-                parentScrapId={parentScrapId}
                 commentId={commentId}
               />
             )}
