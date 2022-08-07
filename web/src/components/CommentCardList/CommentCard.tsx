@@ -65,6 +65,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
                 afterMutationCompleted={afterMutationCompleted}
                 mode={"EDIT"}
                 onCancel={() => setIsCommentReadOnly(true)}
+                originContent={content}
                 parentScrapId={parentScrapId}
               />
             )}

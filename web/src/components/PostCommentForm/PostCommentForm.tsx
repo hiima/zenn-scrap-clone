@@ -16,8 +16,10 @@ type PostCommentFormProps = {
   afterMutationCompleted: () => void;
   /** NEW=新規作成モード, EDIT=編集モード(キャンセルボタンが現れる) */
   mode: MODE;
-  /** キャンセルクリック時に実行するコールバック処理。 `mode=EDIT` のときのみ実行される */
+  /** 編集モード時に使用する。キャンセルクリック時に実行するコールバック処理 */
   onCancel?: () => void;
+  /** 編集モード時に使用する。編集ボタンを押す前の元のコメント。キャンセルを押したら、元のコメントが復元される */
+  originContent?: string;
   /** コメントの親スクラップID */
   parentScrapId: string;
 };
@@ -26,6 +28,7 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
   afterMutationCompleted,
   mode,
   onCancel = () => {},
+  originContent = "",
   parentScrapId,
 }) => {
   const [mutate] = useCreateCommentMutation({
@@ -37,7 +40,7 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
       console.error();
     },
   });
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(originContent);
 
   const handleContentChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -55,6 +58,7 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
   ) => {
     event.preventDefault();
 
+    // FIXME: NEW, EDIT問わず常にINSERTしてしまっている
     mutate({
       variables: {
         input: {
@@ -72,10 +76,17 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
       <CardContent>
         <Box component="form" onSubmit={handleSubmit}>
           <TextareaAutosize
+            // FIXME: 編集モードの場合は、初期値として元のcontentを設定しなければならない
+            value={content}
+            onChange={handleContentChange}
+            onKeyDown={(event) => {
+              if (event.metaKey && event.key === "Enter") {
+                handleSubmit(event);
+              }
+            }}
+            placeholder="スクラップにコメントを追加"
             minRows={6}
             maxRows={16}
-            placeholder="スクラップにコメントを追加"
-            // FIXME: 編集モードの場合は、初期値として元のcontentを設定しなければならない
             style={{
               // NOTE: 非フォーカス時のアウトラインを削除
               border: "none",
@@ -84,13 +95,6 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
               width: "100%",
               fontSize: "15px",
               resize: "vertical",
-            }}
-            value={content}
-            onChange={handleContentChange}
-            onKeyDown={(event) => {
-              if (event.metaKey && event.key === "Enter") {
-                handleSubmit(event);
-              }
             }}
             spellCheck={false}
           />
