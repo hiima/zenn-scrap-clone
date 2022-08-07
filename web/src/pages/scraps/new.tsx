@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import { uuid } from "uuidv4";
 import { Bar } from "../../components/Bar";
-import { Title } from "../../components/Title/Title";
+import { Title } from "../../components/Title";
 import { useCreateScrapMutation } from "../../graphql/generated";
 
 const New: NextPage = () => {

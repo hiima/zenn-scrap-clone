@@ -1,19 +1,15 @@
-import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import { useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import { toRelativeDate } from "../../lib/toRelativeDate";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import DeleteIconOutlined from "@mui/icons-material/Delete";
-import EditIconOutlined from "@mui/icons-material/Edit";
-import { DeleteCommentConfirmDialog } from "../DeleteCommentConfirmDialog";
+import { DeleteCommentConfirmDialog } from "./DeleteCommentConfirmDialog";
+import { CommentCardMenu } from "./CommentCardMenu";
+import { PostCommentForm } from "../PostCommentForm";
 
 type CommentCardProps = {
+  parentScrapId: string;
   commentId: string;
   content: string;
   postedAt: string;
@@ -22,28 +18,15 @@ type CommentCardProps = {
 };
 
 export const CommentCard: React.FC<CommentCardProps> = ({
+  parentScrapId,
   commentId,
   content,
   postedAt,
   afterMutationCompleted,
 }) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const menuOpen = Boolean(anchorEl);
-  const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-  const handleEditClick = () => {
-    setAnchorEl(null);
-  };
-  const handleDeleteClick = () => {
-    setDialogOpen(true);
-    setAnchorEl(null);
-  };
-
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  const [isCommentReadOnly, setIsCommentReadOnly] = useState(true);
 
   return (
     <>
@@ -60,39 +43,37 @@ export const CommentCard: React.FC<CommentCardProps> = ({
             <Typography variant="subtitle2" color="gray">
               {toRelativeDate(postedAt)}
             </Typography>
-            <Box display="flex" justifyContent="flex-end">
-              <Button
-                disableRipple
-                style={{
-                  backgroundColor: "transparent",
+
+            <CommentCardMenu
+              // NOTE: 編集ボタンが押されたら、コメントを編集モードに切り替える
+              onClickEdit={() => setIsCommentReadOnly(false)}
+              onClickDelete={() => setDialogOpen(true)}
+            />
+
+            {isCommentReadOnly ? (
+              <Typography
+                sx={{
+                  wordWrap: "break-word",
+                  whiteSpace: "pre-line",
+                  mt: "1rem",
                 }}
-                endIcon={<KeyboardArrowDownIcon sx={{ color: "gray" }} />}
-                onClick={handleMenuClick}
-              />
-              <Menu
-                anchorEl={anchorEl}
-                open={menuOpen}
-                onClose={handleMenuClose}
               >
-                <MenuItem disableRipple onClick={handleEditClick}>
-                  <EditIconOutlined />
-                  編集
-                </MenuItem>
-                <MenuItem disableRipple onClick={handleDeleteClick}>
-                  <DeleteIconOutlined sx={{ color: "red" }} />
-                  <Typography color="red">削除</Typography>
-                </MenuItem>
-              </Menu>
-            </Box>
-            <Typography
-              sx={{
-                wordWrap: "break-word",
-                whiteSpace: "pre-line",
-                mt: "1rem",
-              }}
-            >
-              {content}
-            </Typography>
+                {content}
+              </Typography>
+            ) : (
+              <PostCommentForm
+                afterMutationCompleted={() => {
+                  // NOTE: コメントの編集が終わったら、コメント欄を読み取り専用に戻す
+                  setIsCommentReadOnly(true);
+                  afterMutationCompleted();
+                }}
+                mode={"EDIT"}
+                onCancel={() => setIsCommentReadOnly(true)}
+                originContent={content}
+                parentScrapId={parentScrapId}
+                commentId={commentId}
+              />
+            )}
           </Stack>
         </CardContent>
       </Card>

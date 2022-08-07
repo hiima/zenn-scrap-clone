@@ -1,0 +1,5 @@
+mutation UpdateComment($id: uuid!, $content: String!) {
+  updateCommentsByPk(pk_columns: { id: $id }, _set: { content: $content }) {
+    id
+  }
+}

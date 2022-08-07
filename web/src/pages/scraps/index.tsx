@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 import Error from "next/error";
 import { Bar } from "../../components/Bar";
 import { ScrapCardList } from "../../components/ScrapCardList";
-import { Title } from "../../components/Title/Title";
+import { Title } from "../../components/Title";
 import { useScrapsQuery } from "../../graphql/generated";
 
 const Home: NextPage = () => {

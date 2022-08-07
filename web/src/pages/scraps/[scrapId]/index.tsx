@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { Bar } from "../../../components/Bar";
 import { CommentCardList } from "../../../components/CommentCardList";
 import { PostCommentForm } from "../../../components/PostCommentForm";
-import { Title } from "../../../components/Title/Title";
+import { Title } from "../../../components/Title";
 import { useScrapQuery } from "../../../graphql/generated";
 import { toRelativeDate } from "../../../lib/toRelativeDate";
 
@@ -59,9 +59,10 @@ const Scrap: NextPage = () => {
               {data.scrapsByPk?.title}
             </Typography>
 
-            {comments.length > 0 ? (
+            {data.scrapsByPk && comments.length > 0 ? (
               <CommentCardList
                 comments={comments}
+                parentScrapId={scrapId}
                 afterCommentMutationCompleted={refetch}
               />
             ) : (
@@ -77,8 +78,9 @@ const Scrap: NextPage = () => {
             )}
 
             <PostCommentForm
-              scrapId={scrapId}
               afterMutationCompleted={refetch}
+              mode="NEW"
+              parentScrapId={scrapId}
             />
           </>
         )}

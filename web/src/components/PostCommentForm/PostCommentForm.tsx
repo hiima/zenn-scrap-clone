@@ -5,22 +5,41 @@ import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import Typography from "@mui/material/Typography";
 import { ChangeEvent, useState } from "react";
-import { useCreateCommentMutation } from "../../graphql/generated";
+import {
+  useCreateCommentMutation,
+  useUpdateCommentMutation,
+} from "../../graphql/generated";
 import { uuid } from "uuidv4";
+
+type MODE = "NEW" | "EDIT";
 
 type PostCommentFormProps = {
   /** ミューテーション完了後に実行するコールバック処理 */
   afterMutationCompleted: () => void;
-  scrapId: string;
+  /** NEW=新規モード, EDIT=編集モード(キャンセルボタンが現れる) */
+  mode: MODE;
+  // TODO: これは必須じゃないはずなので確認してOptionalにする。編集モードでは使わないから
+  /** 新規モード時に使用する。新規作成するコメントを紐付ける対象となる親スクラップID */
+  parentScrapId: string;
+  /** 編集モード時に使用する。キャンセルクリック時に実行するコールバック処理 */
+  onCancel?: () => void;
+  /** 編集モード時に使用する。編集ボタンを押す前の元のコメント。キャンセルを押したら、元のコメントが復元される */
+  originContent?: string;
+  /** 編集モード時に使用する。更新対象のコメントID */
+  commentId?: string;
 };
 
+// FIXME: 片方のモードのみに必要なパラメータがOptionalで居心地が悪い。関数宣言化してオーバーロードが使えないか？
 export const PostCommentForm: React.FC<PostCommentFormProps> = ({
   afterMutationCompleted,
-  scrapId,
+  mode,
+  parentScrapId,
+  onCancel = () => {},
+  originContent = "",
+  commentId = "",
 }) => {
-  const [mutate] = useCreateCommentMutation({
+  const [mutateCreate] = useCreateCommentMutation({
     onCompleted() {
       setContent("");
       afterMutationCompleted();
@@ -29,7 +48,17 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
       console.error();
     },
   });
-  const [content, setContent] = useState("");
+  const [mutateUpdate] = useUpdateCommentMutation({
+    onCompleted() {
+      setContent("");
+      afterMutationCompleted();
+    },
+    onError() {
+      console.error();
+    },
+  });
+
+  const [content, setContent] = useState(originContent);
 
   const handleContentChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -47,35 +76,33 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
   ) => {
     event.preventDefault();
 
-    mutate({
-      variables: {
-        input: {
-          id: uuid(),
-          content,
-          scrapId,
+    if (mode === "NEW") {
+      mutateCreate({
+        variables: {
+          input: {
+            id: uuid(),
+            content,
+            scrapId: parentScrapId,
+          },
         },
-      },
-    });
+      });
+    } else {
+      mutateUpdate({
+        variables: {
+          id: commentId,
+          content,
+        },
+      });
+    }
   };
 
   return (
-    // NOTE: 入力欄の高さに応じて伸びるようにしている
+    // NOTE: 入力行数に応じて下に伸びるようにしている
     <Card sx={{ height: "auto", mt: "1rem" }}>
       <CardContent>
         <Box component="form" onSubmit={handleSubmit}>
           <TextareaAutosize
-            minRows={6}
-            maxRows={16}
-            placeholder="スクラップにコメントを追加"
-            style={{
-              width: "100%",
-              // NOTE: 非フォーカス時のアウトラインを削除
-              border: "none",
-              // NOTE: フォーカス時のアウトラインを削除
-              outline: "none",
-              fontSize: "15px",
-              resize: "vertical",
-            }}
+            // FIXME: 編集モードの場合は、初期値として元のcontentを設定しなければならない
             value={content}
             onChange={handleContentChange}
             onKeyDown={(event) => {
@@ -83,27 +110,41 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
                 handleSubmit(event);
               }
             }}
+            placeholder="スクラップにコメントを追加"
+            minRows={6}
+            maxRows={16}
+            style={{
+              // NOTE: 非フォーカス時のアウトラインを削除
+              border: "none",
+              // NOTE: フォーカス時のアウトラインを削除
+              outline: "none",
+              width: "100%",
+              fontSize: "15px",
+              resize: "vertical",
+            }}
             spellCheck={false}
           />
           <Divider></Divider>
           {/* NOTE: 右側に配置 */}
           <Box display="flex" justifyContent="flex-end">
-            <Stack direction="column">
+            <Stack direction="row" gap={2}>
+              {mode === "EDIT" && (
+                <Button
+                  color="inherit"
+                  sx={{ mt: "1.5rem" }}
+                  onClick={onCancel}
+                >
+                  キャンセル
+                </Button>
+              )}
               <Button
                 type="submit"
                 variant="contained"
                 disabled={!canSubmit()}
                 sx={{ mt: "1.5rem" }}
               >
-                投稿する
+                {mode === "NEW" ? "投稿する" : "更新する"}
               </Button>
-              <Typography
-                fontSize="0.6rem"
-                textAlign="right"
-                sx={{ mt: "0.2rem", mr: "0.1rem" }}
-              >
-                ⌘+Enterで送信
-              </Typography>
             </Stack>
           </Box>
         </Box>
