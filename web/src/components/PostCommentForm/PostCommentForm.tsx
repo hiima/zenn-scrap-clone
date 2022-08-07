@@ -130,7 +130,7 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = (props) => {
           {props.mode === Mode.Edit && (
             <Button
               color="inherit"
-              sx={{ mt: "1.5rem" }}
+              sx={{ mt: "1.5rem", boxShadow: 0 }}
               onClick={props.onCancel}
             >
               キャンセル
@@ -140,7 +140,7 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = (props) => {
             type="submit"
             variant="contained"
             disabled={!canSubmit()}
-            sx={{ mt: "1.5rem" }}
+            sx={{ mt: "1.5rem", boxShadow: 0 }}
           >
             {props.mode === Mode.New ? "投稿する" : "更新する"}
           </Button>

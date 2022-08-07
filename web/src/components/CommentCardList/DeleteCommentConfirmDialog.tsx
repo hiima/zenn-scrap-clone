@@ -66,7 +66,7 @@ export const DeleteCommentConfirmDialog: React.FC<
           <Button
             variant="contained"
             color="inherit"
-            sx={{ width: "6.5rem" }}
+            sx={{ width: "6.5rem", boxShadow: 0 }}
             onClick={onClose}
           >
             キャンセル
@@ -74,7 +74,7 @@ export const DeleteCommentConfirmDialog: React.FC<
           <Button
             variant="contained"
             color="error"
-            sx={{ width: "6.5rem" }}
+            sx={{ width: "6.5rem", boxShadow: 0 }}
             onClick={handleDeleteClick}
           >
             削除
