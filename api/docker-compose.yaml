@@ -37,5 +37,7 @@ services:
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: 'startup, http-log, webhook-log, websocket-log, query-log'
       HASURA_GRAPHQL_EXPERIMENTAL_FEATURES: 'naming_convention'
       HASURA_GRAPHQL_DEFAULT_NAMING_CONVENTION: 'graphql-default'
+      HASURA_GRAPHQL_ADMIN_SECRET: 'secret'
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: 'anonymous'
 volumes:
   db_data: null

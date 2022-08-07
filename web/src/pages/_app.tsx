@@ -13,6 +13,9 @@ const theme = createTheme({
 const client = new ApolloClient({
   uri: process.env.NEXT_PUBLIC_API_URL,
   cache: new InMemoryCache(),
+  headers: {
+    "x-hasura-role": "anonymous",
+  },
 });
 
 const App = ({ Component, pageProps }: AppProps) => {

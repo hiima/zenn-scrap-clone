@@ -57,7 +57,11 @@ const Scrap: NextPage = () => {
                 {data.scrapsByPk?.comments.length}
               </Typography>
             </Stack>
-            <Typography variant="h5" fontWeight="bold" sx={{ mt: "1rem" }}>
+            <Typography
+              variant="h5"
+              fontWeight="bold"
+              sx={{ mt: "1rem", mb: "1rem" }}
+            >
               {data.scrapsByPk?.title}
             </Typography>
 

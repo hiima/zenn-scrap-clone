@@ -13,6 +13,10 @@ module.exports = {
           [API_URL]: {},
         },
       ],
+      headers: {
+        "x-hasura-role": "anonymous",
+        // "x-hasura-admin-secret": ADMIN_SECRET,
+      },
       documents: ["./src/graphql/**/*.gql"],
       plugins: [
         "typescript",
