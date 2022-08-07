@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { toRelativeDate } from "../../lib/toRelativeDate";
-import { DeleteCommentConfirmDialog } from "../DeleteCommentConfirmDialog";
+import { DeleteCommentConfirmDialog } from "./DeleteCommentConfirmDialog";
 import { CommentCardMenu } from "./CommentCardMenu";
 
 type CommentCardProps = {
