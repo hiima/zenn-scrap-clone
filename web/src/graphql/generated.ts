@@ -863,7 +863,7 @@ export const ScrapDocument = gql`
       id
       title
       postedAt
-      comments {
+      comments(orderBy: { postedAt: asc }) {
         id
         content
         postedAt
