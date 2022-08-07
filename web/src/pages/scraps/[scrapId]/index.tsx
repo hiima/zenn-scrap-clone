@@ -7,7 +7,7 @@ import type { NextPage } from "next";
 import Error from "next/error";
 import { useRouter } from "next/router";
 import { Bar } from "../../../components/Bar";
-import { CommentCard } from "../../../components/CommentCard";
+import { CommentCardList } from "../../../components/CommentCardList";
 import { PostCommentForm } from "../../../components/PostCommentForm";
 import { Title } from "../../../components/Title/Title";
 import { useScrapQuery } from "../../../graphql/generated";
@@ -58,18 +58,12 @@ const Scrap: NextPage = () => {
             <Typography variant="h5" fontWeight="bold" sx={{ mt: "1rem" }}>
               {data.scrapsByPk?.title}
             </Typography>
+
             {comments.length > 0 ? (
-              comments.map((comment) => {
-                return (
-                  <CommentCard
-                    key={comment.id}
-                    commentId={comment.id}
-                    content={comment.content}
-                    postedAt={comment.postedAt}
-                    afterMutationCompleted={refetch}
-                  ></CommentCard>
-                );
-              })
+              <CommentCardList
+                comments={comments}
+                afterCommentMutationCompleted={refetch}
+              />
             ) : (
               // NOTE コメントがない場合のみ表示する
               <Typography
