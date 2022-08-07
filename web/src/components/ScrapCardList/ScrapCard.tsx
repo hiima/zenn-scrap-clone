@@ -21,7 +21,7 @@ export const ScrapCard: React.FC<ScrapCardProps> = ({
   commentCount,
 }) => {
   return (
-    <Card sx={{ mt: "0.3rem" }}>
+    <Card sx={{ mt: "0.3rem", boxShadow: 0 }}>
       <CardActionArea href={`/scraps/${id}`}>
         <CardContent>
           <Stack direction="row" justifyContent="space-between">
