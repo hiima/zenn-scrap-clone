@@ -59,9 +59,10 @@ const Scrap: NextPage = () => {
               {data.scrapsByPk?.title}
             </Typography>
 
-            {comments.length > 0 ? (
+            {data.scrapsByPk && comments.length > 0 ? (
               <CommentCardList
                 comments={comments}
+                parentScrapId={scrapId}
                 afterCommentMutationCompleted={refetch}
               />
             ) : (
@@ -77,9 +78,9 @@ const Scrap: NextPage = () => {
             )}
 
             <PostCommentForm
-              scrapId={scrapId}
               afterMutationCompleted={refetch}
               mode="NEW"
+              parentScrapId={scrapId}
             />
           </>
         )}

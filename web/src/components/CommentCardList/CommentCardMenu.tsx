@@ -10,12 +10,13 @@ import EditIconOutlined from "@mui/icons-material/Edit";
 
 type CommentCardMenuProps = {
   /** 編集ボタンクリック時に実行するコールバック */
-  // onClickEdit: () => void;
+  onClickEdit: () => void;
   /** 削除ボタンクリック時に実行するコールバック */
   onClickDelete: () => void;
 };
 
 export const CommentCardMenu: React.FC<CommentCardMenuProps> = ({
+  onClickEdit,
   onClickDelete,
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -27,6 +28,7 @@ export const CommentCardMenu: React.FC<CommentCardMenuProps> = ({
     setAnchorEl(null);
   };
   const handleEditClick = () => {
+    onClickEdit();
     setAnchorEl(null);
   };
   const handleDeleteClick = () => {
@@ -45,10 +47,13 @@ export const CommentCardMenu: React.FC<CommentCardMenuProps> = ({
         onClick={handleMenuClick}
       />
       <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleMenuClose}>
+        {/* NOTE: 編集メニューアイテム */}
         <MenuItem disableRipple onClick={handleEditClick}>
           <EditIconOutlined />
           編集
         </MenuItem>
+
+        {/* NOTE: 削除メニューアイテム */}
         <MenuItem disableRipple onClick={handleDeleteClick}>
           <DeleteIconOutlined sx={{ color: "red" }} />
           <Typography color="red">削除</Typography>

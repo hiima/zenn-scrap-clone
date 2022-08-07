@@ -5,7 +5,6 @@ import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import Typography from "@mui/material/Typography";
 import { ChangeEvent, useState } from "react";
 import { useCreateCommentMutation } from "../../graphql/generated";
 import { uuid } from "uuidv4";
@@ -19,14 +18,15 @@ type PostCommentFormProps = {
   mode: MODE;
   /** キャンセルクリック時に実行するコールバック処理。 `mode=EDIT` のときのみ実行される */
   onCancel?: () => void;
-  scrapId: string;
+  /** コメントの親スクラップID */
+  parentScrapId: string;
 };
 
 export const PostCommentForm: React.FC<PostCommentFormProps> = ({
   afterMutationCompleted,
   mode,
   onCancel = () => {},
-  scrapId,
+  parentScrapId,
 }) => {
   const [mutate] = useCreateCommentMutation({
     onCompleted() {
@@ -60,14 +60,14 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
         input: {
           id: uuid(),
           content,
-          scrapId,
+          scrapId: parentScrapId,
         },
       },
     });
   };
 
   return (
-    // NOTE: 入力欄の高さに応じて伸びるようにしている
+    // NOTE: 入力行数に応じて下に伸びるようにしている
     <Card sx={{ height: "auto", mt: "1rem" }}>
       <CardContent>
         <Box component="form" onSubmit={handleSubmit}>
@@ -75,6 +75,7 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
             minRows={6}
             maxRows={16}
             placeholder="スクラップにコメントを追加"
+            // FIXME: 編集モードの場合は、初期値として元のcontentを設定しなければならない
             style={{
               // NOTE: 非フォーカス時のアウトラインを削除
               border: "none",

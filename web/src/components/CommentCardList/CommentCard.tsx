@@ -6,8 +6,10 @@ import Typography from "@mui/material/Typography";
 import { toRelativeDate } from "../../lib/toRelativeDate";
 import { DeleteCommentConfirmDialog } from "./DeleteCommentConfirmDialog";
 import { CommentCardMenu } from "./CommentCardMenu";
+import { PostCommentForm } from "../PostCommentForm";
 
 type CommentCardProps = {
+  parentScrapId: string;
   commentId: string;
   content: string;
   postedAt: string;
@@ -16,12 +18,15 @@ type CommentCardProps = {
 };
 
 export const CommentCard: React.FC<CommentCardProps> = ({
+  parentScrapId,
   commentId,
   content,
   postedAt,
   afterMutationCompleted,
 }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  const [isCommentReadOnly, setIsCommentReadOnly] = useState(true);
 
   return (
     <>
@@ -39,17 +44,30 @@ export const CommentCard: React.FC<CommentCardProps> = ({
               {toRelativeDate(postedAt)}
             </Typography>
 
-            <CommentCardMenu onClickDelete={() => setDialogOpen(true)} />
+            <CommentCardMenu
+              // NOTE: 編集ボタンが押されたら、コメントを編集モードに切り替える
+              onClickEdit={() => setIsCommentReadOnly(false)}
+              onClickDelete={() => setDialogOpen(true)}
+            />
 
-            <Typography
-              sx={{
-                wordWrap: "break-word",
-                whiteSpace: "pre-line",
-                mt: "1rem",
-              }}
-            >
-              {content}
-            </Typography>
+            {isCommentReadOnly ? (
+              <Typography
+                sx={{
+                  wordWrap: "break-word",
+                  whiteSpace: "pre-line",
+                  mt: "1rem",
+                }}
+              >
+                {content}
+              </Typography>
+            ) : (
+              <PostCommentForm
+                afterMutationCompleted={afterMutationCompleted}
+                mode={"EDIT"}
+                onCancel={() => setIsCommentReadOnly(true)}
+                parentScrapId={parentScrapId}
+              />
+            )}
           </Stack>
         </CardContent>
       </Card>
