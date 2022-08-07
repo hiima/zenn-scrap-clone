@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { Bar } from "../../../components/Bar";
 import { CommentCardList } from "../../../components/CommentCardList";
 import { PostCommentForm } from "../../../components/PostCommentForm";
-import { Title } from "../../../components/Title/Title";
+import { Title } from "../../../components/Title";
 import { useScrapQuery } from "../../../graphql/generated";
 import { toRelativeDate } from "../../../lib/toRelativeDate";
 

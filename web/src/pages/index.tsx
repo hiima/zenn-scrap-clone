@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { Title } from "../components/Title/Title";
+import { Title } from "../components/Title";
 
 const Top: NextPage = () => {
   const router = useRouter();
