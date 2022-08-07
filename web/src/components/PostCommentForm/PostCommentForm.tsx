@@ -12,37 +12,37 @@ import {
 } from "../../graphql/generated";
 import { uuid } from "uuidv4";
 
-type MODE = "NEW" | "EDIT";
+export enum Mode {
+  New,
+  Edit,
+}
+
+type NewModeProps = {
+  mode: Mode.New;
+  /** 新規作成するコメントを紐付ける対象となる親スクラップID */
+  parentScrapId: string;
+};
+
+type EditModeProps = {
+  mode: Mode.Edit;
+  /** キャンセルクリック時に実行するコールバック処理 */
+  onCancel: () => void;
+  /** 編集ボタンを押す前の元のコメント。キャンセルを押したら、元のコメントが復元される */
+  originContent: string;
+  /** 更新対象のコメントID */
+  commentId: string;
+};
 
 type PostCommentFormProps = {
   /** ミューテーション完了後に実行するコールバック処理 */
   afterMutationCompleted: () => void;
-  /** NEW=新規モード, EDIT=編集モード(キャンセルボタンが現れる) */
-  mode: MODE;
-  // TODO: これは必須じゃないはずなので確認してOptionalにする。編集モードでは使わないから
-  /** 新規モード時に使用する。新規作成するコメントを紐付ける対象となる親スクラップID */
-  parentScrapId: string;
-  /** 編集モード時に使用する。キャンセルクリック時に実行するコールバック処理 */
-  onCancel?: () => void;
-  /** 編集モード時に使用する。編集ボタンを押す前の元のコメント。キャンセルを押したら、元のコメントが復元される */
-  originContent?: string;
-  /** 編集モード時に使用する。更新対象のコメントID */
-  commentId?: string;
-};
+} & (NewModeProps | EditModeProps);
 
-// FIXME: 片方のモードのみに必要なパラメータがOptionalで居心地が悪い。関数宣言化してオーバーロードが使えないか？
-export const PostCommentForm: React.FC<PostCommentFormProps> = ({
-  afterMutationCompleted,
-  mode,
-  parentScrapId,
-  onCancel = () => {},
-  originContent = "",
-  commentId = "",
-}) => {
+export const PostCommentForm: React.FC<PostCommentFormProps> = (props) => {
   const [mutateCreate] = useCreateCommentMutation({
     onCompleted() {
       setContent("");
-      afterMutationCompleted();
+      props.afterMutationCompleted();
     },
     onError() {
       console.error();
@@ -51,14 +51,16 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
   const [mutateUpdate] = useUpdateCommentMutation({
     onCompleted() {
       setContent("");
-      afterMutationCompleted();
+      props.afterMutationCompleted();
     },
     onError() {
       console.error();
     },
   });
 
-  const [content, setContent] = useState(originContent);
+  const [content, setContent] = useState(
+    props.mode === Mode.New ? "" : props.originContent
+  );
 
   const handleContentChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -76,20 +78,20 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
   ) => {
     event.preventDefault();
 
-    if (mode === "NEW") {
+    if (props.mode === Mode.New) {
       mutateCreate({
         variables: {
           input: {
             id: uuid(),
             content,
-            scrapId: parentScrapId,
+            scrapId: props.parentScrapId,
           },
         },
       });
     } else {
       mutateUpdate({
         variables: {
-          id: commentId,
+          id: props.commentId,
           content,
         },
       });
@@ -128,11 +130,11 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
           {/* NOTE: 右側に配置 */}
           <Box display="flex" justifyContent="flex-end">
             <Stack direction="row" gap={2}>
-              {mode === "EDIT" && (
+              {props.mode === Mode.Edit && (
                 <Button
                   color="inherit"
                   sx={{ mt: "1.5rem" }}
-                  onClick={onCancel}
+                  onClick={props.onCancel}
                 >
                   キャンセル
                 </Button>
@@ -143,7 +145,7 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
                 disabled={!canSubmit()}
                 sx={{ mt: "1.5rem" }}
               >
-                {mode === "NEW" ? "投稿する" : "更新する"}
+                {props.mode === Mode.New ? "投稿する" : "更新する"}
               </Button>
             </Stack>
           </Box>
