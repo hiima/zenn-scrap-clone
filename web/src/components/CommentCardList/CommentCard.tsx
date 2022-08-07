@@ -17,14 +17,15 @@ type CommentCardProps = {
   commentId: string;
   content: string;
   postedAt: string;
-  refetch: () => void;
+  /** ミューテーション完了後に実行するコールバック処理 */
+  afterMutationCompleted: () => void;
 };
 
 export const CommentCard: React.FC<CommentCardProps> = ({
   commentId,
   content,
   postedAt,
-  refetch,
+  afterMutationCompleted,
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const menuOpen = Boolean(anchorEl);
@@ -50,7 +51,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
         commentId={commentId}
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}
-        refetch={refetch}
+        afterMutationCompleted={afterMutationCompleted}
       />
 
       <Card sx={{ mt: "0.3rem" }}>

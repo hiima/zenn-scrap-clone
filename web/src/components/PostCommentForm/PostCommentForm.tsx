@@ -11,18 +11,19 @@ import { useCreateCommentMutation } from "../../graphql/generated";
 import { uuid } from "uuidv4";
 
 type PostCommentFormProps = {
-  refetch: () => void;
+  /** ミューテーション完了後に実行するコールバック処理 */
+  afterMutationCompleted: () => void;
   scrapId: string;
 };
 
 export const PostCommentForm: React.FC<PostCommentFormProps> = ({
-  refetch,
+  afterMutationCompleted,
   scrapId,
 }) => {
   const [mutate] = useCreateCommentMutation({
     onCompleted() {
       setContent("");
-      refetch();
+      afterMutationCompleted();
     },
     onError() {
       console.error();
