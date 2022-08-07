@@ -2,13 +2,11 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import ChatBubbleOutline from "@mui/icons-material/ChatBubbleOutline";
 import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import type { NextPage } from "next";
 import Error from "next/error";
 import { useRouter } from "next/router";
-import { Bar } from "../../../components/Bar";
 import { CommentCardList } from "../../../components/CommentCardList";
 import { PostCommentForm, Mode } from "../../../components/PostCommentForm";
 import { Title } from "../../../components/Title";
@@ -31,8 +29,6 @@ const Scrap: NextPage = () => {
   return (
     <>
       <Title text={data?.scrapsByPk?.title}></Title>
-      <CssBaseline />
-      <Bar />
       <Container maxWidth="md">
         {!loading && data && (
           <>

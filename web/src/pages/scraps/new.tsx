@@ -1,5 +1,4 @@
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -7,7 +6,6 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import { uuid } from "uuidv4";
-import { Bar } from "../../components/Bar";
 import { Title } from "../../components/Title";
 import { useCreateScrapMutation } from "../../graphql/generated";
 
@@ -59,8 +57,6 @@ const New: NextPage = () => {
   return (
     <>
       <Title text="新しいスクラップの作成"></Title>
-      <CssBaseline />
-      <Bar />
       <Grid
         component="form"
         onSubmit={handleSubmit}

@@ -1,8 +1,6 @@
 import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
 import type { NextPage } from "next";
 import Error from "next/error";
-import { Bar } from "../../components/Bar";
 import { ScrapCardList } from "../../components/ScrapCardList";
 import { Title } from "../../components/Title";
 import { useScrapsQuery } from "../../graphql/generated";
@@ -23,8 +21,6 @@ const Home: NextPage = () => {
   return (
     <>
       <Title text="スクラップ一覧"></Title>
-      <CssBaseline />
-      <Bar />
       <Container maxWidth="md">
         <>{!loading && <ScrapCardList scraps={scraps} />}</>
       </Container>
