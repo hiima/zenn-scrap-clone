@@ -38,7 +38,7 @@ type PostCommentFormProps = {
 } & (NewModeProps | EditModeProps);
 
 export const PostCommentForm: React.FC<PostCommentFormProps> = (props) => {
-  const [mutateCreate] = useCreateCommentMutation({
+  const [mutateCreate, { loading: loadingCreate }] = useCreateCommentMutation({
     onCompleted() {
       setContent("");
       props.afterMutationCompleted();
@@ -47,7 +47,7 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = (props) => {
       console.error();
     },
   });
-  const [mutateUpdate] = useUpdateCommentMutation({
+  const [mutateUpdate, { loading: loadingUpdate }] = useUpdateCommentMutation({
     onCompleted() {
       setContent("");
       props.afterMutationCompleted();
@@ -68,7 +68,8 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = (props) => {
   };
 
   // NOTE: コメントが入力されなければスクラップは作成できないようにする
-  const canSubmit = () => content.length !== 0;
+  const canSubmit = () =>
+    content.length !== 0 && !loadingCreate && !loadingUpdate;
 
   const handleSubmit = (
     event:
