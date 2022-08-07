@@ -37,7 +37,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
         afterMutationCompleted={afterMutationCompleted}
       />
 
-      <Card sx={{ mt: "0.3rem" }}>
+      <Card sx={{ mt: "0.3rem", boxShadow: 0 }}>
         <CardContent>
           <Stack>
             <Typography variant="subtitle2" color="gray">

@@ -15,7 +15,7 @@ export const Bar: React.FC = () => {
   const handleAddNewClick = () => router.push("/scraps/new");
 
   return (
-    <AppBar position="static" sx={{ mb: "1rem" }}>
+    <AppBar position="static" sx={{ mb: "1rem", boxShadow: 0 }}>
       <Container maxWidth="md">
         <Toolbar>
           {/* NOTE: 左側に配置 */}
@@ -31,6 +31,7 @@ export const Bar: React.FC = () => {
             variant="contained"
             startIcon={<ModeEditIcon />}
             onClick={handleAddNewClick}
+            sx={{ boxShadow: 0 }}
           >
             ADD NEW
           </Button>

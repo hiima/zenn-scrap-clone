@@ -79,7 +79,7 @@ const Scrap: NextPage = () => {
               </Typography>
             )}
 
-            <Card sx={{ mt: "2rem" }}>
+            <Card sx={{ mt: "3rem", boxShadow: 0 }}>
               <CardContent>
                 <PostCommentForm
                   mode={Mode.New}
