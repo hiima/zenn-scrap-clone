@@ -6,7 +6,10 @@ import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { ChangeEvent, useState } from "react";
-import { useCreateCommentMutation } from "../../graphql/generated";
+import {
+  useCreateCommentMutation,
+  useUpdateCommentMutation,
+} from "../../graphql/generated";
 import { uuid } from "uuidv4";
 
 type MODE = "NEW" | "EDIT";
@@ -14,24 +17,29 @@ type MODE = "NEW" | "EDIT";
 type PostCommentFormProps = {
   /** ミューテーション完了後に実行するコールバック処理 */
   afterMutationCompleted: () => void;
-  /** NEW=新規作成モード, EDIT=編集モード(キャンセルボタンが現れる) */
+  /** NEW=新規モード, EDIT=編集モード(キャンセルボタンが現れる) */
   mode: MODE;
+  // TODO: これは必須じゃないはずなので確認してOptionalにする。編集モードでは使わないから
+  /** 新規モード時に使用する。新規作成するコメントを紐付ける対象となる親スクラップID */
+  parentScrapId: string;
   /** 編集モード時に使用する。キャンセルクリック時に実行するコールバック処理 */
   onCancel?: () => void;
   /** 編集モード時に使用する。編集ボタンを押す前の元のコメント。キャンセルを押したら、元のコメントが復元される */
   originContent?: string;
-  /** コメントの親スクラップID */
-  parentScrapId: string;
+  /** 編集モード時に使用する。更新対象のコメントID */
+  commentId?: string;
 };
 
+// FIXME: 片方のモードのみに必要なパラメータがOptionalで居心地が悪い。関数宣言化してオーバーロードが使えないか？
 export const PostCommentForm: React.FC<PostCommentFormProps> = ({
   afterMutationCompleted,
   mode,
+  parentScrapId,
   onCancel = () => {},
   originContent = "",
-  parentScrapId,
+  commentId = "",
 }) => {
-  const [mutate] = useCreateCommentMutation({
+  const [mutateCreate] = useCreateCommentMutation({
     onCompleted() {
       setContent("");
       afterMutationCompleted();
@@ -40,6 +48,16 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
       console.error();
     },
   });
+  const [mutateUpdate] = useUpdateCommentMutation({
+    onCompleted() {
+      setContent("");
+      afterMutationCompleted();
+    },
+    onError() {
+      console.error();
+    },
+  });
+
   const [content, setContent] = useState(originContent);
 
   const handleContentChange = (
@@ -58,16 +76,24 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
   ) => {
     event.preventDefault();
 
-    // FIXME: NEW, EDIT問わず常にINSERTしてしまっている
-    mutate({
-      variables: {
-        input: {
-          id: uuid(),
-          content,
-          scrapId: parentScrapId,
+    if (mode === "NEW") {
+      mutateCreate({
+        variables: {
+          input: {
+            id: uuid(),
+            content,
+            scrapId: parentScrapId,
+          },
         },
-      },
-    });
+      });
+    } else {
+      mutateUpdate({
+        variables: {
+          id: commentId,
+          content,
+        },
+      });
+    }
   };
 
   return (
