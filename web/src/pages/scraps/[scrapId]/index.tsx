@@ -66,7 +66,7 @@ const Scrap: NextPage = () => {
                     commentId={comment.id}
                     content={comment.content}
                     postedAt={comment.postedAt}
-                    refetch={refetch}
+                    afterMutationCompleted={refetch}
                   ></CommentCard>
                 );
               })
@@ -82,7 +82,10 @@ const Scrap: NextPage = () => {
               </Typography>
             )}
 
-            <PostCommentForm scrapId={scrapId} refetch={refetch} />
+            <PostCommentForm
+              scrapId={scrapId}
+              afterMutationCompleted={refetch}
+            />
           </>
         )}
       </Container>

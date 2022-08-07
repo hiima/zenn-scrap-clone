@@ -22,15 +22,16 @@ type DeleteCommentConfirmDialogProps = {
   commentId: string;
   open: boolean;
   onClose: () => void;
-  refetch: () => void;
+  /** ミューテーション完了後に実行するコールバック処理 */
+  afterMutationCompleted: () => void;
 };
 
 export const DeleteCommentConfirmDialog: React.FC<
   DeleteCommentConfirmDialogProps
-> = ({ commentId, open, onClose, refetch }) => {
+> = ({ commentId, open, onClose, afterMutationCompleted }) => {
   const [mutate] = useDeleteCommentMutation({
     onCompleted() {
-      refetch();
+      afterMutationCompleted();
       onClose();
     },
     onError(error) {
