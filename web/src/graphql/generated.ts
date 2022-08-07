@@ -91,7 +91,6 @@ export enum CommentsConstraint {
 export type CommentsInsertInput = {
   content?: InputMaybe<Scalars["String"]>;
   id?: InputMaybe<Scalars["uuid"]>;
-  postedAt?: InputMaybe<Scalars["timestamptz"]>;
   scrap?: InputMaybe<ScrapsObjRelInsertInput>;
   scrapId?: InputMaybe<Scalars["uuid"]>;
 };
@@ -175,21 +174,12 @@ export enum CommentsSelectColumn {
 /** input type for updating data in table "comments" */
 export type CommentsSetInput = {
   content?: InputMaybe<Scalars["String"]>;
-  id?: InputMaybe<Scalars["uuid"]>;
-  postedAt?: InputMaybe<Scalars["timestamptz"]>;
-  scrapId?: InputMaybe<Scalars["uuid"]>;
 };
 
 /** update columns of table "comments" */
 export enum CommentsUpdateColumn {
   /** column name */
   Content = "content",
-  /** column name */
-  Id = "id",
-  /** column name */
-  PostedAt = "postedAt",
-  /** column name */
-  ScrapId = "scrapId",
 }
 
 /** スクラップ */
@@ -222,27 +212,6 @@ export type ScrapsCommentsAggregateArgs = {
   where?: InputMaybe<CommentsBoolExp>;
 };
 
-/** aggregated selection of "scraps" */
-export type ScrapsAggregate = {
-  __typename?: "ScrapsAggregate";
-  aggregate?: Maybe<ScrapsAggregateFields>;
-  nodes: Array<Scraps>;
-};
-
-/** aggregate fields of "scraps" */
-export type ScrapsAggregateFields = {
-  __typename?: "ScrapsAggregateFields";
-  count: Scalars["Int"];
-  max?: Maybe<ScrapsMaxFields>;
-  min?: Maybe<ScrapsMinFields>;
-};
-
-/** aggregate fields of "scraps" */
-export type ScrapsAggregateFieldsCountArgs = {
-  columns?: InputMaybe<Array<ScrapsSelectColumn>>;
-  distinct?: InputMaybe<Scalars["Boolean"]>;
-};
-
 /** Boolean expression to filter rows from the table "scraps". All fields are combined with a logical 'AND'. */
 export type ScrapsBoolExp = {
   _and?: InputMaybe<Array<ScrapsBoolExp>>;
@@ -264,24 +233,7 @@ export enum ScrapsConstraint {
 export type ScrapsInsertInput = {
   comments?: InputMaybe<CommentsArrRelInsertInput>;
   id?: InputMaybe<Scalars["uuid"]>;
-  postedAt?: InputMaybe<Scalars["timestamptz"]>;
   title?: InputMaybe<Scalars["String"]>;
-};
-
-/** aggregate max on columns */
-export type ScrapsMaxFields = {
-  __typename?: "ScrapsMaxFields";
-  id?: Maybe<Scalars["uuid"]>;
-  postedAt?: Maybe<Scalars["timestamptz"]>;
-  title?: Maybe<Scalars["String"]>;
-};
-
-/** aggregate min on columns */
-export type ScrapsMinFields = {
-  __typename?: "ScrapsMinFields";
-  id?: Maybe<Scalars["uuid"]>;
-  postedAt?: Maybe<Scalars["timestamptz"]>;
-  title?: Maybe<Scalars["String"]>;
 };
 
 /** response of any mutation on the table "scraps" */
@@ -332,17 +284,11 @@ export enum ScrapsSelectColumn {
 
 /** input type for updating data in table "scraps" */
 export type ScrapsSetInput = {
-  id?: InputMaybe<Scalars["uuid"]>;
-  postedAt?: InputMaybe<Scalars["timestamptz"]>;
   title?: InputMaybe<Scalars["String"]>;
 };
 
 /** update columns of table "scraps" */
 export enum ScrapsUpdateColumn {
-  /** column name */
-  Id = "id",
-  /** column name */
-  PostedAt = "postedAt",
   /** column name */
   Title = "title",
 }
@@ -529,8 +475,6 @@ export type Query_Root = {
   commentsByPk?: Maybe<Comments>;
   /** fetch data from the table: "scraps" */
   scraps: Array<Scraps>;
-  /** fetch aggregated fields from the table: "scraps" */
-  scrapsAggregate: ScrapsAggregate;
   /** fetch data from the table: "scraps" using primary key columns */
   scrapsByPk?: Maybe<Scraps>;
 };
@@ -563,14 +507,6 @@ export type Query_RootScrapsArgs = {
   where?: InputMaybe<ScrapsBoolExp>;
 };
 
-export type Query_RootScrapsAggregateArgs = {
-  distinctOn?: InputMaybe<Array<ScrapsSelectColumn>>;
-  limit?: InputMaybe<Scalars["Int"]>;
-  offset?: InputMaybe<Scalars["Int"]>;
-  orderBy?: InputMaybe<Array<ScrapsOrderBy>>;
-  where?: InputMaybe<ScrapsBoolExp>;
-};
-
 export type Query_RootScrapsByPkArgs = {
   id: Scalars["uuid"];
 };
@@ -585,8 +521,6 @@ export type Subscription_Root = {
   commentsByPk?: Maybe<Comments>;
   /** fetch data from the table: "scraps" */
   scraps: Array<Scraps>;
-  /** fetch aggregated fields from the table: "scraps" */
-  scrapsAggregate: ScrapsAggregate;
   /** fetch data from the table: "scraps" using primary key columns */
   scrapsByPk?: Maybe<Scraps>;
 };
@@ -612,14 +546,6 @@ export type Subscription_RootCommentsByPkArgs = {
 };
 
 export type Subscription_RootScrapsArgs = {
-  distinctOn?: InputMaybe<Array<ScrapsSelectColumn>>;
-  limit?: InputMaybe<Scalars["Int"]>;
-  offset?: InputMaybe<Scalars["Int"]>;
-  orderBy?: InputMaybe<Array<ScrapsOrderBy>>;
-  where?: InputMaybe<ScrapsBoolExp>;
-};
-
-export type Subscription_RootScrapsAggregateArgs = {
   distinctOn?: InputMaybe<Array<ScrapsSelectColumn>>;
   limit?: InputMaybe<Scalars["Int"]>;
   offset?: InputMaybe<Scalars["Int"]>;
