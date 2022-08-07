@@ -3,7 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import type { NextPage } from "next";
 import Error from "next/error";
 import { Bar } from "../../components/Bar";
-import { ScrapCard } from "../../components/ScrapCard";
+import { ScrapCardList } from "../../components/ScrapCardList";
 import { Title } from "../../components/Title/Title";
 import { useScrapsQuery } from "../../graphql/generated";
 
@@ -12,27 +12,21 @@ const Home: NextPage = () => {
 
   if (error) return <Error statusCode={500} />;
 
+  const scraps =
+    data?.scraps.map((scrap) => ({
+      id: scrap.id,
+      title: scrap.title,
+      postedAt: scrap.postedAt,
+      commentCount: scrap.commentsAggregate.aggregate?.count || 0,
+    })) || [];
+
   return (
     <>
       <Title text="スクラップ一覧"></Title>
       <CssBaseline />
       <Bar />
       <Container maxWidth="md">
-        <>
-          {!loading &&
-            data &&
-            data.scraps.map((scrap) => {
-              return (
-                <ScrapCard
-                  key={scrap.id}
-                  id={scrap.id}
-                  title={scrap.title}
-                  postedAt={scrap.postedAt}
-                  commentCount={scrap.commentsAggregate.aggregate?.count || 0}
-                ></ScrapCard>
-              );
-            })}
-        </>
+        <>{!loading && <ScrapCardList scraps={scraps} />}</>
       </Container>
     </>
   );
