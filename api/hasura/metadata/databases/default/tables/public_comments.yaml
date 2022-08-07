@@ -22,6 +22,7 @@ select_permissions:
         - posted_at
         - scrap_id
       filter: {}
+      allow_aggregations: true
 update_permissions:
   - role: anonymous
     permission:
