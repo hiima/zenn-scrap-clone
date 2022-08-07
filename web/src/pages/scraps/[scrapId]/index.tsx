@@ -79,6 +79,7 @@ const Scrap: NextPage = () => {
             <PostCommentForm
               scrapId={scrapId}
               afterMutationCompleted={refetch}
+              mode="NEW"
             />
           </>
         )}

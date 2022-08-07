@@ -10,14 +10,22 @@ import { ChangeEvent, useState } from "react";
 import { useCreateCommentMutation } from "../../graphql/generated";
 import { uuid } from "uuidv4";
 
+type MODE = "NEW" | "EDIT";
+
 type PostCommentFormProps = {
   /** ミューテーション完了後に実行するコールバック処理 */
   afterMutationCompleted: () => void;
+  /** NEW=新規作成モード, EDIT=編集モード(キャンセルボタンが現れる) */
+  mode: MODE;
+  /** キャンセルクリック時に実行するコールバック処理。 `mode=EDIT` のときのみ実行される */
+  onCancel?: () => void;
   scrapId: string;
 };
 
 export const PostCommentForm: React.FC<PostCommentFormProps> = ({
   afterMutationCompleted,
+  mode,
+  onCancel = () => {},
   scrapId,
 }) => {
   const [mutate] = useCreateCommentMutation({
@@ -68,11 +76,11 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
             maxRows={16}
             placeholder="スクラップにコメントを追加"
             style={{
-              width: "100%",
               // NOTE: 非フォーカス時のアウトラインを削除
               border: "none",
               // NOTE: フォーカス時のアウトラインを削除
               outline: "none",
+              width: "100%",
               fontSize: "15px",
               resize: "vertical",
             }}
@@ -88,22 +96,24 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = ({
           <Divider></Divider>
           {/* NOTE: 右側に配置 */}
           <Box display="flex" justifyContent="flex-end">
-            <Stack direction="column">
+            <Stack direction="row" gap={2}>
+              {mode === "EDIT" && (
+                <Button
+                  color="inherit"
+                  sx={{ mt: "1.5rem" }}
+                  onClick={onCancel}
+                >
+                  キャンセル
+                </Button>
+              )}
               <Button
                 type="submit"
                 variant="contained"
                 disabled={!canSubmit()}
                 sx={{ mt: "1.5rem" }}
               >
-                投稿する
+                {mode === "NEW" ? "投稿する" : "更新する"}
               </Button>
-              <Typography
-                fontSize="0.6rem"
-                textAlign="right"
-                sx={{ mt: "0.2rem", mr: "0.1rem" }}
-              >
-                ⌘+Enterで送信
-              </Typography>
             </Stack>
           </Box>
         </Box>
