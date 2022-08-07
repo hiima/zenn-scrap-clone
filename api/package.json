@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "hasura": "hasura --project hasura",
+    "console": "yarn hasura console --admin-secret secret",
     "schemaspy": "docker run --rm --net=\"host\" -v \"$PWD/tmp/schemaspy:/output\" schemaspy/schemaspy:latest -u postgres -p postgres -db postgres -t pgsql -host localhost -port 5432 && open ./tmp/schemaspy/index.html"
   },
   "devDependencies": {

@@ -9,3 +9,30 @@ array_relationships:
         table:
           name: comments
           schema: public
+insert_permissions:
+  - role: anonymous
+    permission:
+      check: {}
+      columns:
+        - id
+        - title
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - title
+        - posted_at
+        - id
+      filter: {}
+update_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - title
+      filter: {}
+      check: {}
+delete_permissions:
+  - role: anonymous
+    permission:
+      backend_only: false
+      filter: {}
