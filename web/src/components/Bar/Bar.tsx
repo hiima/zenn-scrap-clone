@@ -15,13 +15,16 @@ export const Bar: React.FC = () => {
   const handleAddNewClick = () => router.push("/scraps/new");
 
   return (
-    <AppBar position="static" sx={{ mb: "1rem", boxShadow: 0 }}>
+    <AppBar
+      position="static"
+      sx={{ mb: "1rem", boxShadow: 0, background: "white" }}
+    >
       <Container maxWidth="md">
         <Toolbar>
           {/* NOTE: 左側に配置 */}
           <Box display="flex" flexGrow={1}>
             <Typography variant="h5">
-              <Link underline="none" color="inherit" href="/">
+              <Link underline="none" color="primary" fontWeight="bold" href="/">
                 Skrap
               </Link>
             </Typography>
