@@ -13,7 +13,7 @@ import { useCreateScrapMutation } from "../../graphql/generated";
 
 const New: NextPage = () => {
   const router = useRouter();
-  const [mutate] = useCreateScrapMutation({
+  const [mutate, { loading }] = useCreateScrapMutation({
     onCompleted({ insertScrapsOne }) {
       // NOTE: 通常起こり得ないケース
       if (!insertScrapsOne) {
@@ -37,7 +37,7 @@ const New: NextPage = () => {
   };
 
   // NOTE: タイトルが入力されなければスクラップは作成できないようにする
-  const canSubmit = () => title.length !== 0;
+  const canSubmit = () => title.length !== 0 && !loading;
 
   const handleSubmit = (
     event:
