@@ -40,15 +40,21 @@ export const CommentCard: React.FC<CommentCardProps> = ({
       <Card sx={{ mt: "0.3rem", boxShadow: 0 }}>
         <CardContent>
           <Stack>
-            <Typography variant="subtitle2" color="gray">
-              {toRelativeDate(postedAt)}
-            </Typography>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Typography variant="subtitle2" color="gray">
+                {toRelativeDate(postedAt)}
+              </Typography>
 
-            <CommentCardMenu
-              // NOTE: 編集ボタンが押されたら、コメントを編集モードに切り替える
-              onClickEdit={() => setIsCommentReadOnly(false)}
-              onClickDelete={() => setDialogOpen(true)}
-            />
+              <CommentCardMenu
+                // NOTE: 編集ボタンが押されたら、コメントを編集モードに切り替える
+                onClickEdit={() => setIsCommentReadOnly(false)}
+                onClickDelete={() => setDialogOpen(true)}
+              />
+            </Stack>
 
             {isCommentReadOnly ? (
               <Typography
