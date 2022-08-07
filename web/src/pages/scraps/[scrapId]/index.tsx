@@ -12,6 +12,7 @@ import { PostCommentForm, Mode } from "../../../components/PostCommentForm";
 import { Title } from "../../../components/Title";
 import { useScrapQuery } from "../../../graphql/generated";
 import { toRelativeDate } from "../../../lib/toRelativeDate";
+import { Progress } from "../../../components/Progress";
 
 const Scrap: NextPage = () => {
   const router = useRouter();
@@ -24,72 +25,70 @@ const Scrap: NextPage = () => {
 
   if (error) return <Error statusCode={500} />;
 
+  if (loading || !data) return <Progress />;
+
   const comments = data?.scrapsByPk?.comments || [];
 
   return (
     <>
       <Title text={data?.scrapsByPk?.title}></Title>
       <Container maxWidth="md">
-        {!loading && data && (
-          <>
-            <Stack direction="row" alignItems="center">
-              <Typography variant="body2" color="gray">
-                {`${
-                  data.scrapsByPk?.postedAt
-                    ? toRelativeDate(data.scrapsByPk?.postedAt) + "に作成"
-                    : ""
-                }`}
-              </Typography>
-              <ChatBubbleOutline
-                sx={{
-                  mt: "0.1rem",
-                  ml: "1rem",
-                  color: "gray",
-                  width: "1rem",
-                  height: "1rem",
-                }}
-              ></ChatBubbleOutline>
-              <Typography variant="body2" color="gray" sx={{ ml: "0.1rem" }}>
-                {data.scrapsByPk?.comments.length}
-              </Typography>
-            </Stack>
-            <Typography
-              variant="h5"
-              fontWeight="bold"
-              sx={{ mt: "1rem", mb: "1rem" }}
-            >
-              {data.scrapsByPk?.title}
-            </Typography>
+        <Stack direction="row" alignItems="center">
+          <Typography variant="body2" color="gray">
+            {`${
+              data.scrapsByPk?.postedAt
+                ? toRelativeDate(data.scrapsByPk?.postedAt) + "に作成"
+                : ""
+            }`}
+          </Typography>
+          <ChatBubbleOutline
+            sx={{
+              mt: "0.1rem",
+              ml: "1rem",
+              color: "gray",
+              width: "1rem",
+              height: "1rem",
+            }}
+          ></ChatBubbleOutline>
+          <Typography variant="body2" color="gray" sx={{ ml: "0.1rem" }}>
+            {data.scrapsByPk?.comments.length}
+          </Typography>
+        </Stack>
+        <Typography
+          variant="h5"
+          fontWeight="bold"
+          sx={{ mt: "1rem", mb: "1rem" }}
+        >
+          {data.scrapsByPk?.title}
+        </Typography>
 
-            {data.scrapsByPk && comments.length > 0 ? (
-              <CommentCardList
-                comments={comments}
-                parentScrapId={scrapId}
-                afterCommentMutationCompleted={refetch}
-              />
-            ) : (
-              // NOTE コメントがない場合のみ表示する
-              <Typography
-                variant="body1"
-                fontWeight="bold"
-                color="gray"
-                sx={{ mt: "1rem" }}
-              >
-                最初のコメントを追加しましょう。
-              </Typography>
-            )}
-
-            <Card sx={{ mt: "3rem", boxShadow: 0 }}>
-              <CardContent>
-                <PostCommentForm
-                  mode={Mode.New}
-                  afterMutationCompleted={refetch}
-                  parentScrapId={scrapId}
-                />
-              </CardContent>
-            </Card>
-          </>
+        {data.scrapsByPk && comments.length > 0 ? (
+          <CommentCardList
+            comments={comments}
+            parentScrapId={scrapId}
+            afterCommentMutationCompleted={refetch}
+          />
+        ) : (
+          // NOTE コメントがない場合のみ表示する
+          <Typography
+            variant="body1"
+            fontWeight="bold"
+            color="gray"
+            sx={{ mt: "1rem" }}
+          >
+            最初のコメントを追加しましょう。
+          </Typography>
         )}
+
+        <Card sx={{ mt: "3rem", boxShadow: 0 }}>
+          <CardContent>
+            <PostCommentForm
+              mode={Mode.New}
+              afterMutationCompleted={refetch}
+              parentScrapId={scrapId}
+            />
+          </CardContent>
+        </Card>
       </Container>
     </>
   );
