@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
@@ -99,58 +98,53 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = (props) => {
   };
 
   return (
-    // NOTE: 入力行数に応じて下に伸びるようにしている
-    <Card sx={{ height: "auto", mt: "1rem" }}>
-      <CardContent>
-        <Box component="form" onSubmit={handleSubmit}>
-          <TextareaAutosize
-            // FIXME: 編集モードの場合は、初期値として元のcontentを設定しなければならない
-            value={content}
-            onChange={handleContentChange}
-            onKeyDown={(event) => {
-              if (event.metaKey && event.key === "Enter") {
-                handleSubmit(event);
-              }
-            }}
-            placeholder="スクラップにコメントを追加"
-            minRows={6}
-            maxRows={16}
-            style={{
-              // NOTE: 非フォーカス時のアウトラインを削除
-              border: "none",
-              // NOTE: フォーカス時のアウトラインを削除
-              outline: "none",
-              width: "100%",
-              fontSize: "15px",
-              resize: "vertical",
-            }}
-            spellCheck={false}
-          />
-          <Divider></Divider>
-          {/* NOTE: 右側に配置 */}
-          <Box display="flex" justifyContent="flex-end">
-            <Stack direction="row" gap={2}>
-              {props.mode === Mode.Edit && (
-                <Button
-                  color="inherit"
-                  sx={{ mt: "1.5rem" }}
-                  onClick={props.onCancel}
-                >
-                  キャンセル
-                </Button>
-              )}
-              <Button
-                type="submit"
-                variant="contained"
-                disabled={!canSubmit()}
-                sx={{ mt: "1.5rem" }}
-              >
-                {props.mode === Mode.New ? "投稿する" : "更新する"}
-              </Button>
-            </Stack>
-          </Box>
-        </Box>
-      </CardContent>
-    </Card>
+    <Box component="form" onSubmit={handleSubmit}>
+      <TextareaAutosize
+        // FIXME: 編集モードの場合は、初期値として元のcontentを設定しなければならない
+        value={content}
+        onChange={handleContentChange}
+        onKeyDown={(event) => {
+          if (event.metaKey && event.key === "Enter") {
+            handleSubmit(event);
+          }
+        }}
+        placeholder="スクラップにコメントを追加"
+        minRows={6}
+        maxRows={16}
+        style={{
+          // NOTE: 非フォーカス時のアウトラインを削除
+          border: "none",
+          // NOTE: フォーカス時のアウトラインを削除
+          outline: "none",
+          width: "100%",
+          fontSize: "15px",
+          resize: "vertical",
+        }}
+        spellCheck={false}
+      />
+      <Divider></Divider>
+      {/* NOTE: 右側に配置 */}
+      <Box display="flex" justifyContent="flex-end">
+        <Stack direction="row" gap={2}>
+          {props.mode === Mode.Edit && (
+            <Button
+              color="inherit"
+              sx={{ mt: "1.5rem" }}
+              onClick={props.onCancel}
+            >
+              キャンセル
+            </Button>
+          )}
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={!canSubmit()}
+            sx={{ mt: "1.5rem" }}
+          >
+            {props.mode === Mode.New ? "投稿する" : "更新する"}
+          </Button>
+        </Stack>
+      </Box>
+    </Box>
   );
 };

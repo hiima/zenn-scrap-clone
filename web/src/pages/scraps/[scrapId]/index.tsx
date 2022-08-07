@@ -1,3 +1,5 @@
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 import ChatBubbleOutline from "@mui/icons-material/ChatBubbleOutline";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -77,11 +79,15 @@ const Scrap: NextPage = () => {
               </Typography>
             )}
 
-            <PostCommentForm
-              mode={Mode.New}
-              afterMutationCompleted={refetch}
-              parentScrapId={scrapId}
-            />
+            <Card sx={{ mt: "2rem" }}>
+              <CardContent>
+                <PostCommentForm
+                  mode={Mode.New}
+                  afterMutationCompleted={refetch}
+                  parentScrapId={scrapId}
+                />
+              </CardContent>
+            </Card>
           </>
         )}
       </Container>
