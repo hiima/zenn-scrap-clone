@@ -56,7 +56,7 @@ const Scrap: NextPage = () => {
           </Typography>
         </Stack>
 
-        <ScrapTitle title={data.scrapsByPk?.title || ""} />
+        <ScrapTitle scrapId={scrapId} srcTitle={data.scrapsByPk?.title || ""} />
 
         {data.scrapsByPk && comments.length > 0 ? (
           <CommentCardList
