@@ -1,0 +1,5 @@
+mutation EditScrapTitle($id: uuid!, $title: String!) {
+  updateScrapsByPk(pk_columns: { id: $id }, _set: { title: $title }) {
+    id
+  }
+}

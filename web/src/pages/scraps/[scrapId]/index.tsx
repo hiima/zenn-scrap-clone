@@ -13,6 +13,7 @@ import { Title } from "../../../components/Title";
 import { useScrapQuery } from "../../../graphql/generated";
 import { toRelativeDate } from "../../../lib/toRelativeDate";
 import { Progress } from "../../../components/Progress";
+import { ScrapTitle } from "../../../components/ScrapTitle";
 
 const Scrap: NextPage = () => {
   const router = useRouter();
@@ -54,13 +55,8 @@ const Scrap: NextPage = () => {
             {data.scrapsByPk?.comments.length}
           </Typography>
         </Stack>
-        <Typography
-          variant="h5"
-          fontWeight="bold"
-          sx={{ mt: "1rem", mb: "1rem" }}
-        >
-          {data.scrapsByPk?.title}
-        </Typography>
+
+        <ScrapTitle scrapId={scrapId} srcTitle={data.scrapsByPk?.title || ""} />
 
         {data.scrapsByPk && comments.length > 0 ? (
           <CommentCardList
@@ -70,17 +66,12 @@ const Scrap: NextPage = () => {
           />
         ) : (
           // NOTE コメントがない場合のみ表示する
-          <Typography
-            variant="body1"
-            fontWeight="bold"
-            color="gray"
-            sx={{ mt: "1rem" }}
-          >
+          <Typography variant="body1" fontWeight="bold" color="gray">
             最初のコメントを追加しましょう。
           </Typography>
         )}
 
-        <Card sx={{ mt: "3rem", boxShadow: 0 }}>
+        <Card sx={{ mt: "2rem", boxShadow: 0 }}>
           <CardContent>
             <PostCommentForm
               mode={Mode.New}
