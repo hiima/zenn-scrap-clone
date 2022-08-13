@@ -1,5 +1,5 @@
 query Scraps {
-  scraps(orderBy: { postedAt: desc }) {
+  scraps(orderBy: { postedAt: DESC }) {
     id
     postedAt
     title
