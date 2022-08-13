@@ -13,6 +13,7 @@ import { Title } from "../../../components/Title";
 import { useScrapQuery } from "../../../graphql/generated";
 import { toRelativeDate } from "../../../lib/toRelativeDate";
 import { Progress } from "../../../components/Progress";
+import { ScrapTitle } from "../../../components/ScrapTitle";
 
 const Scrap: NextPage = () => {
   const router = useRouter();
@@ -54,13 +55,8 @@ const Scrap: NextPage = () => {
             {data.scrapsByPk?.comments.length}
           </Typography>
         </Stack>
-        <Typography
-          variant="h5"
-          fontWeight="bold"
-          sx={{ mt: "1rem", mb: "1rem" }}
-        >
-          {data.scrapsByPk?.title}
-        </Typography>
+
+        <ScrapTitle title={data.scrapsByPk?.title || ""} />
 
         {data.scrapsByPk && comments.length > 0 ? (
           <CommentCardList
