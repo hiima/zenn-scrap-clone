@@ -53,7 +53,10 @@ export const ScrapTitle: React.FC<ScrapTitleProps> = ({
           </IconButton>
           <IconButton
             sx={{ ml: "-0.5rem" }}
-            onClick={() => setIsEditMode(false)}
+            onClick={() => {
+              setIsEditMode(false);
+              setTitle(srcTitle);
+            }}
             color="error"
           >
             <CloseIcon />
