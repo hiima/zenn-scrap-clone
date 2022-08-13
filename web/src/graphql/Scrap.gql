@@ -3,7 +3,7 @@ query Scrap($scrapId: uuid!) {
     id
     title
     postedAt
-    comments(orderBy: { postedAt: asc }) {
+    comments(orderBy: { postedAt: ASC }) {
       id
       content
       postedAt

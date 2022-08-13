@@ -182,6 +182,28 @@ export enum CommentsUpdateColumn {
   Content = "content",
 }
 
+export type CommentsUpdates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<CommentsSetInput>;
+  where: CommentsBoolExp;
+};
+
+/** column ordering options */
+export enum OrderBy {
+  /** in ascending order, nulls last */
+  Asc = "ASC",
+  /** in ascending order, nulls first */
+  AscNullsFirst = "ASC_NULLS_FIRST",
+  /** in ascending order, nulls last */
+  AscNullsLast = "ASC_NULLS_LAST",
+  /** in descending order, nulls first */
+  Desc = "DESC",
+  /** in descending order, nulls first */
+  DescNullsFirst = "DESC_NULLS_FIRST",
+  /** in descending order, nulls last */
+  DescNullsLast = "DESC_NULLS_LAST",
+}
+
 /** スクラップ */
 export type Scraps = {
   __typename?: "Scraps";
@@ -261,7 +283,7 @@ export type ScrapsOnConflict = {
 
 /** Ordering options when selecting data from "scraps". */
 export type ScrapsOrderBy = {
-  comments_aggregate?: InputMaybe<CommentsAggregateOrderBy>;
+  commentsAggregate?: InputMaybe<CommentsAggregateOrderBy>;
   id?: InputMaybe<OrderBy>;
   postedAt?: InputMaybe<OrderBy>;
   title?: InputMaybe<OrderBy>;
@@ -292,6 +314,12 @@ export enum ScrapsUpdateColumn {
   /** column name */
   Title = "title",
 }
+
+export type ScrapsUpdates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<ScrapsSetInput>;
+  where: ScrapsBoolExp;
+};
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export type StringComparisonExp = {
@@ -375,10 +403,14 @@ export type Mutation_Root = {
   updateComments?: Maybe<CommentsMutationResponse>;
   /** update single row of the table: "comments" */
   updateCommentsByPk?: Maybe<Comments>;
+  /** update multiples rows of table: "comments" */
+  updateCommentsMany?: Maybe<Array<Maybe<CommentsMutationResponse>>>;
   /** update data of the table: "scraps" */
   updateScraps?: Maybe<ScrapsMutationResponse>;
   /** update single row of the table: "scraps" */
   updateScrapsByPk?: Maybe<Scraps>;
+  /** update multiples rows of table: "scraps" */
+  updateScrapsMany?: Maybe<Array<Maybe<ScrapsMutationResponse>>>;
 };
 
 /** mutation root */
@@ -438,6 +470,11 @@ export type Mutation_RootUpdateCommentsByPkArgs = {
 };
 
 /** mutation root */
+export type Mutation_RootUpdateCommentsManyArgs = {
+  updates: Array<CommentsUpdates>;
+};
+
+/** mutation root */
 export type Mutation_RootUpdateScrapsArgs = {
   _set?: InputMaybe<ScrapsSetInput>;
   where: ScrapsBoolExp;
@@ -449,21 +486,10 @@ export type Mutation_RootUpdateScrapsByPkArgs = {
   pk_columns: ScrapsPkColumnsInput;
 };
 
-/** column ordering options */
-export enum OrderBy {
-  /** in ascending order, nulls last */
-  Asc = "asc",
-  /** in ascending order, nulls first */
-  AscNullsFirst = "ascNullsFirst",
-  /** in ascending order, nulls last */
-  AscNullsLast = "ascNullsLast",
-  /** in descending order, nulls first */
-  Desc = "desc",
-  /** in descending order, nulls first */
-  DescNullsFirst = "descNullsFirst",
-  /** in descending order, nulls last */
-  DescNullsLast = "descNullsLast",
-}
+/** mutation root */
+export type Mutation_RootUpdateScrapsManyArgs = {
+  updates: Array<ScrapsUpdates>;
+};
 
 export type Query_Root = {
   __typename?: "query_root";
@@ -789,7 +815,7 @@ export const ScrapDocument = gql`
       id
       title
       postedAt
-      comments(orderBy: { postedAt: asc }) {
+      comments(orderBy: { postedAt: ASC }) {
         id
         content
         postedAt
@@ -840,7 +866,7 @@ export type ScrapQueryResult = Apollo.QueryResult<
 >;
 export const ScrapsDocument = gql`
   query Scraps {
-    scraps(orderBy: { postedAt: desc }) {
+    scraps(orderBy: { postedAt: DESC }) {
       id
       postedAt
       title
