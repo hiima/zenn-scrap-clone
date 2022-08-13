@@ -36,6 +36,8 @@ export const ScrapTitle: React.FC<ScrapTitleProps> = ({
     setTitle(event?.target.value);
   };
 
+  const canSaveTitle = () => title.length > 0;
+
   return (
     <Stack direction="row" alignItems="center">
       {isEditMode ? (
@@ -50,6 +52,7 @@ export const ScrapTitle: React.FC<ScrapTitleProps> = ({
             sx={{ ml: "0.2rem" }}
             onClick={() => mutate({ variables: { id: scrapId, title } })}
             color="success"
+            disabled={!canSaveTitle()}
           >
             <CheckIcon />
           </IconButton>
