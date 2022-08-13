@@ -63,7 +63,6 @@ export const DeleteCommentConfirmDialog: React.FC<
         >
           <Button
             variant="contained"
-            // color="inherit"
             sx={{
               width: "6.5rem",
               boxShadow: 0,

@@ -95,7 +95,12 @@ const New: NextPage = () => {
             type="submit"
             variant="contained"
             disabled={!canSubmit()}
-            sx={{ boxShadow: 0 }}
+            sx={{
+              boxShadow: 0,
+              ":hover": {
+                boxShadow: 0,
+              },
+            }}
           >
             スクラップを作成
           </Button>
