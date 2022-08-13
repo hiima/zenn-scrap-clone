@@ -3,7 +3,7 @@ import { IconButton, Stack, TextField } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import CloseIcon from "@mui/icons-material/Close";
-import SaveIcon from "@mui/icons-material/Save";
+import CheckIcon from "@mui/icons-material/Check";
 import { useEditScrapTitleMutation } from "../../graphql/generated";
 
 type ScrapTitleProps = {
@@ -42,14 +42,21 @@ export const ScrapTitle: React.FC<ScrapTitleProps> = ({
             value={title}
             variant="standard"
             onChange={handleTitleChange}
+            sx={{ mt: "1rem", mb: "1rem", width: "16rem" }}
           />
-          <IconButton onClick={() => setIsEditMode(false)}>
-            <CloseIcon />
+          <IconButton
+            sx={{ ml: "0.2rem" }}
+            onClick={() => mutate({ variables: { id: scrapId, title } })}
+            color="success"
+          >
+            <CheckIcon />
           </IconButton>
           <IconButton
-            onClick={() => mutate({ variables: { id: scrapId, title } })}
+            sx={{ ml: "-0.5rem" }}
+            onClick={() => setIsEditMode(false)}
+            color="error"
           >
-            <SaveIcon />
+            <CloseIcon />
           </IconButton>
         </>
       ) : (

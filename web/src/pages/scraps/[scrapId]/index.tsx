@@ -66,17 +66,12 @@ const Scrap: NextPage = () => {
           />
         ) : (
           // NOTE コメントがない場合のみ表示する
-          <Typography
-            variant="body1"
-            fontWeight="bold"
-            color="gray"
-            sx={{ mt: "1rem" }}
-          >
+          <Typography variant="body1" fontWeight="bold" color="gray">
             最初のコメントを追加しましょう。
           </Typography>
         )}
 
-        <Card sx={{ mt: "3rem", boxShadow: 0 }}>
+        <Card sx={{ mt: "2rem", boxShadow: 0 }}>
           <CardContent>
             <PostCommentForm
               mode={Mode.New}
