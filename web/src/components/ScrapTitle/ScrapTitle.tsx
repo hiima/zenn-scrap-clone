@@ -1,6 +1,8 @@
 import { ChangeEvent, useState } from "react";
-import { IconButton, Stack, TextField } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckIcon from "@mui/icons-material/Check";
