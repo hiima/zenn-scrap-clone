@@ -45,7 +45,12 @@ export const CommentCardMenu: React.FC<CommentCardMenuProps> = ({
         }}
         endIcon={<KeyboardArrowDownIcon sx={{ color: "gray" }} />}
         onClick={handleMenuClick}
-        sx={{ boxShadow: 0 }}
+        sx={{
+          boxShadow: 0,
+          ":hover": {
+            boxShadow: 0,
+          },
+        }}
       />
       <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleMenuClose}>
         {/* NOTE: 編集メニューアイテム */}

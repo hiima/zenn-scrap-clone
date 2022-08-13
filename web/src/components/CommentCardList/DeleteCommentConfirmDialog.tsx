@@ -44,19 +44,17 @@ export const DeleteCommentConfirmDialog: React.FC<
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      TransitionComponent={Transition}
-      fullWidth
-    >
+    <Dialog open={open} onClose={onClose} TransitionComponent={Transition}>
       <DialogTitle fontWeight="bold" textAlign="center">
         削除しますか？
       </DialogTitle>
 
       <DialogContent>
-        <Typography color="gray">
-          コメントを削除しようとしています。この操作は戻すことができません。
+        <Typography color="inherit" variant="body1" textAlign="center">
+          コメントを削除しようとしています。
+        </Typography>
+        <Typography color="inherit" variant="body1" textAlign="center">
+          この操作は戻すことができません。
         </Typography>
         <Stack
           direction="row"
@@ -65,8 +63,15 @@ export const DeleteCommentConfirmDialog: React.FC<
         >
           <Button
             variant="contained"
-            color="inherit"
-            sx={{ width: "6.5rem", boxShadow: 0 }}
+            sx={{
+              width: "6.5rem",
+              boxShadow: 0,
+              backgroundColor: "silver",
+              ":hover": {
+                backgroundColor: "darkgray",
+                boxShadow: 0,
+              },
+            }}
             onClick={onClose}
           >
             キャンセル
@@ -74,7 +79,13 @@ export const DeleteCommentConfirmDialog: React.FC<
           <Button
             variant="contained"
             color="error"
-            sx={{ width: "6.5rem", boxShadow: 0 }}
+            sx={{
+              width: "6.5rem",
+              boxShadow: 0,
+              ":hover": {
+                boxShadow: 0,
+              },
+            }}
             onClick={handleDeleteClick}
           >
             削除

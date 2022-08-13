@@ -34,7 +34,12 @@ export const Bar: React.FC = () => {
             variant="contained"
             startIcon={<ModeEditIcon />}
             onClick={handleAddNewClick}
-            sx={{ boxShadow: 0 }}
+            sx={{
+              boxShadow: 0,
+              ":hover": {
+                boxShadow: 0,
+              },
+            }}
           >
             ADD NEW
           </Button>
