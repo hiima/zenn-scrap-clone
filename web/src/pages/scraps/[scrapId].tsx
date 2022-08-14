@@ -1,3 +1,4 @@
+import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import ChatBubbleOutline from "@mui/icons-material/ChatBubbleOutline";
@@ -7,17 +8,26 @@ import Typography from "@mui/material/Typography";
 import type { NextPage } from "next";
 import Error from "next/error";
 import { useRouter } from "next/router";
-import { CommentCardList } from "../../../components/CommentCardList";
-import { PostCommentForm, Mode } from "../../../components/PostCommentForm";
-import { Title } from "../../../components/Title";
-import { useScrapQuery } from "../../../graphql/generated";
-import { toRelativeDate } from "../../../lib/toRelativeDate";
-import { Progress } from "../../../components/Progress";
-import { ScrapTitle } from "../../../components/ScrapTitle";
+import { CommentCardList } from "../../components/CommentCardList";
+import { PostCommentForm, Mode } from "../../components/PostCommentForm";
+import { Title } from "../../components/Title";
+import { useDeleteScrapMutation, useScrapQuery } from "../../graphql/generated";
+import { toRelativeDate } from "../../lib/toRelativeDate";
+import { Progress } from "../../components/Progress";
+import { ScrapTitle } from "../../components/ScrapTitle";
 
 const Scrap: NextPage = () => {
   const router = useRouter();
   const scrapId = router.query.scrapId as string;
+
+  const [mutate, { loading: deleteLoading }] = useDeleteScrapMutation({
+    onCompleted() {
+      router.push("/scraps");
+    },
+    onError(error) {
+      console.error(error);
+    },
+  });
 
   // FIXME: ページ表示時に2回リクエストされてしまう
   const { data, loading, error, refetch } = useScrapQuery({
@@ -56,7 +66,32 @@ const Scrap: NextPage = () => {
           </Typography>
         </Stack>
 
-        <ScrapTitle scrapId={scrapId} srcTitle={data.scrapsByPk?.title || ""} />
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <ScrapTitle
+            scrapId={scrapId}
+            srcTitle={data.scrapsByPk?.title || ""}
+          />
+
+          <Button
+            variant="contained"
+            color="error"
+            sx={{
+              boxShadow: 0,
+              ":hover": {
+                boxShadow: 0,
+              },
+            }}
+            onClick={() => mutate({ variables: { id: scrapId } })}
+            // FIXME: 削除完了後、loadingじゃなくなった時点でenabledになってしまう
+            disabled={deleteLoading}
+          >
+            スクラップを削除する
+          </Button>
+        </Stack>
 
         {data.scrapsByPk && comments.length > 0 ? (
           <CommentCardList
@@ -65,7 +100,7 @@ const Scrap: NextPage = () => {
             afterCommentMutationCompleted={refetch}
           />
         ) : (
-          // NOTE コメントがない場合のみ表示する
+          // MARK: コメントがない場合のみ表示する
           <Typography variant="body1" fontWeight="bold" color="gray">
             最初のコメントを追加しましょう。
           </Typography>

@@ -53,13 +53,13 @@ export const CommentCardMenu: React.FC<CommentCardMenuProps> = ({
         }}
       />
       <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleMenuClose}>
-        {/* NOTE: 編集メニューアイテム */}
+        {/* MARK: 編集メニューアイテム */}
         <MenuItem disableRipple onClick={handleEditClick}>
           <EditIconOutlined />
           編集
         </MenuItem>
 
-        {/* NOTE: 削除メニューアイテム */}
+        {/* MARK: 削除メニューアイテム */}
         <MenuItem disableRipple onClick={handleDeleteClick}>
           <DeleteIconOutlined sx={{ color: "red" }} />
           <Typography color="red">削除</Typography>

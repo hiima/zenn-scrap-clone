@@ -13,7 +13,7 @@ const New: NextPage = () => {
   const router = useRouter();
   const [mutate, { loading }] = useCreateScrapMutation({
     onCompleted({ insertScrapsOne }) {
-      // NOTE: 通常起こり得ないケース
+      // MARK: 通常起こり得ないケース
       if (!insertScrapsOne) {
         console.error("scrap was created but not returned scrap id");
         return;
@@ -34,7 +34,7 @@ const New: NextPage = () => {
     setTitle(event?.target.value);
   };
 
-  // NOTE: タイトルが入力されなければスクラップは作成できないようにする
+  // MARK: タイトルが入力されなければスクラップは作成できないようにする
   const canSubmit = () => title.length !== 0 && !loading;
 
   const handleSubmit = (

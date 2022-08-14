@@ -67,7 +67,7 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = (props) => {
     setContent(event?.target.value);
   };
 
-  // NOTE: コメントが入力されなければスクラップは作成できないようにする
+  // MARK: コメントが入力されなければスクラップは作成できないようにする
   const canSubmit = () =>
     content.length !== 0 && !loadingCreate && !loadingUpdate;
 
@@ -113,9 +113,9 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = (props) => {
         minRows={6}
         maxRows={16}
         style={{
-          // NOTE: 非フォーカス時のアウトラインを削除
+          // MARK: 非フォーカス時のアウトラインを削除
           border: "none",
-          // NOTE: フォーカス時のアウトラインを削除
+          // MARK: フォーカス時のアウトラインを削除
           outline: "none",
           width: "100%",
           fontSize: "15px",
@@ -124,7 +124,7 @@ export const PostCommentForm: React.FC<PostCommentFormProps> = (props) => {
         spellCheck={false}
       />
       <Divider></Divider>
-      {/* NOTE: 右側に配置 */}
+      {/* MARK: 右側に配置 */}
       <Box display="flex" justifyContent="flex-end">
         <Stack direction="row" gap={2}>
           {props.mode === Mode.Edit && (
