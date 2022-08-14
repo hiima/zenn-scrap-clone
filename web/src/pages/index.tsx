@@ -6,7 +6,7 @@ import { Title } from "../components/Title";
 const Top: NextPage = () => {
   const router = useRouter();
 
-  // NOTE: トップページにアクセスされたらリダイレクトさせる
+  // MARK: トップページにアクセスされたらリダイレクトさせる
   useEffect(() => {
     router.push("/scraps");
   }, [router]);

@@ -65,7 +65,7 @@ const Scrap: NextPage = () => {
             afterCommentMutationCompleted={refetch}
           />
         ) : (
-          // NOTE コメントがない場合のみ表示する
+          // MARK: コメントがない場合のみ表示する
           <Typography variant="body1" fontWeight="bold" color="gray">
             最初のコメントを追加しましょう。
           </Typography>

@@ -21,7 +21,7 @@ export const Bar: React.FC = () => {
     >
       <Container maxWidth="md">
         <Toolbar>
-          {/* NOTE: 左側に配置 */}
+          {/* MARK: 左側に配置 */}
           <Box display="flex" flexGrow={1}>
             <Typography variant="h5">
               <Link underline="none" color="primary" fontWeight="bold" href="/">
@@ -29,7 +29,7 @@ export const Bar: React.FC = () => {
               </Link>
             </Typography>
           </Box>
-          {/* NOTE: 右側に配置 */}
+          {/* MARK: 右側に配置 */}
           <Button
             variant="contained"
             startIcon={<ModeEditIcon />}

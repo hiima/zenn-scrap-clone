@@ -50,7 +50,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
               </Typography>
 
               <CommentCardMenu
-                // NOTE: 編集ボタンが押されたら、コメントを編集モードに切り替える
+                // MARK: 編集ボタンが押されたら、コメントを編集モードに切り替える
                 onClickEdit={() => setIsCommentReadOnly(false)}
                 onClickDelete={() => setDialogOpen(true)}
               />
@@ -70,7 +70,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
               <PostCommentForm
                 mode={Mode.Edit}
                 afterMutationCompleted={() => {
-                  // NOTE: コメントの編集が終わったら、コメント欄を読み取り専用に戻す
+                  // MARK: コメントの編集が終わったら、コメント欄を読み取り専用に戻す
                   setIsCommentReadOnly(true);
                   afterMutationCompleted();
                 }}
