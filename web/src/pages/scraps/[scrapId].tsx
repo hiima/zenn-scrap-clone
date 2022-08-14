@@ -44,37 +44,32 @@ const Scrap: NextPage = () => {
     <>
       <Title text={data?.scrapsByPk?.title}></Title>
       <Container maxWidth="md">
-        <Stack direction="row" alignItems="center">
-          <Typography variant="body2" color="gray">
-            {`${
-              data.scrapsByPk?.postedAt
-                ? toRelativeDate(data.scrapsByPk?.postedAt) + "に作成"
-                : ""
-            }`}
-          </Typography>
-          <ChatBubbleOutline
-            sx={{
-              mt: "0.1rem",
-              ml: "1rem",
-              color: "gray",
-              width: "1rem",
-              height: "1rem",
-            }}
-          ></ChatBubbleOutline>
-          <Typography variant="body2" color="gray" sx={{ ml: "0.1rem" }}>
-            {data.scrapsByPk?.comments.length}
-          </Typography>
-        </Stack>
-
         <Stack
           direction="row"
           justifyContent="space-between"
           alignItems="center"
         >
-          <ScrapTitle
-            scrapId={scrapId}
-            srcTitle={data.scrapsByPk?.title || ""}
-          />
+          <Stack direction="row" alignItems="center">
+            <Typography variant="body2" color="gray">
+              {`${
+                data.scrapsByPk?.postedAt
+                  ? toRelativeDate(data.scrapsByPk?.postedAt) + "に作成"
+                  : ""
+              }`}
+            </Typography>
+            <ChatBubbleOutline
+              sx={{
+                mt: "0.1rem",
+                ml: "1rem",
+                color: "gray",
+                width: "1rem",
+                height: "1rem",
+              }}
+            ></ChatBubbleOutline>
+            <Typography variant="body2" color="gray" sx={{ ml: "0.1rem" }}>
+              {data.scrapsByPk?.comments.length}
+            </Typography>
+          </Stack>
 
           <Button
             variant="contained"
@@ -92,6 +87,8 @@ const Scrap: NextPage = () => {
             スクラップを削除する
           </Button>
         </Stack>
+
+        <ScrapTitle scrapId={scrapId} srcTitle={data.scrapsByPk?.title || ""} />
 
         {data.scrapsByPk && comments.length > 0 ? (
           <CommentCardList
