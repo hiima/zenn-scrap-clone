@@ -610,6 +610,15 @@ export type DeleteCommentMutation = {
   deleteCommentsByPk?: { __typename?: "Comments"; id: string } | null;
 };
 
+export type DeleteScrapMutationVariables = Exact<{
+  id: Scalars["uuid"];
+}>;
+
+export type DeleteScrapMutation = {
+  __typename?: "mutation_root";
+  deleteScrapsByPk?: { __typename?: "Scraps"; id: string } | null;
+};
+
 export type EditScrapTitleMutationVariables = Exact<{
   id: Scalars["uuid"];
   title: Scalars["String"];
@@ -818,6 +827,56 @@ export type DeleteCommentMutationResult =
 export type DeleteCommentMutationOptions = Apollo.BaseMutationOptions<
   DeleteCommentMutation,
   DeleteCommentMutationVariables
+>;
+export const DeleteScrapDocument = gql`
+  mutation DeleteScrap($id: uuid!) {
+    deleteScrapsByPk(id: $id) {
+      id
+    }
+  }
+`;
+export type DeleteScrapMutationFn = Apollo.MutationFunction<
+  DeleteScrapMutation,
+  DeleteScrapMutationVariables
+>;
+
+/**
+ * __useDeleteScrapMutation__
+ *
+ * To run a mutation, you first call `useDeleteScrapMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteScrapMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteScrapMutation, { data, loading, error }] = useDeleteScrapMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteScrapMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    DeleteScrapMutation,
+    DeleteScrapMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<DeleteScrapMutation, DeleteScrapMutationVariables>(
+    DeleteScrapDocument,
+    options
+  );
+}
+export type DeleteScrapMutationHookResult = ReturnType<
+  typeof useDeleteScrapMutation
+>;
+export type DeleteScrapMutationResult =
+  Apollo.MutationResult<DeleteScrapMutation>;
+export type DeleteScrapMutationOptions = Apollo.BaseMutationOptions<
+  DeleteScrapMutation,
+  DeleteScrapMutationVariables
 >;
 export const EditScrapTitleDocument = gql`
   mutation EditScrapTitle($id: uuid!, $title: String!) {

@@ -1,0 +1,5 @@
+mutation DeleteScrap($id: uuid!) {
+  deleteScrapsByPk(id: $id) {
+    id
+  }
+}
